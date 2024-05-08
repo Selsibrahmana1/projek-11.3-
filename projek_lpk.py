@@ -102,7 +102,7 @@ def calculate_density_section():
     }
     
     for i in range(num_data):
-        konsentrasi = st.text_input(f'Masukkan nilai konsentrasi data {i+1} (g/mL):', key=f'konsentrasi_{i}')  
+        konsentrasi = st.text_input(f'Masukkan nilai konsentrasi data {i+1}:', key=f'konsentrasi_{i}')  
         data_input_table['Konsentrasi (g/mL)'].append(konsentrasi)
         
         bobot_filled = st.text_input(f'Masukkan nilai rerata bobot labu takar isi (gram) {i+1}:', key=f'bobot_filled_{i}')
