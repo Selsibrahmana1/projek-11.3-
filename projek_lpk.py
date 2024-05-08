@@ -84,15 +84,15 @@ def calculate_density_section():
     # Buat dataframe kosong untuk menyimpan data
     df = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
 
-    # Masukkan data konsentrasi, volume, dan bobot
-    st.write("Masukkan data konsentrasi dan bobot labu takar untuk perhitungan kerapatan:")
-    for i in range(num_data):
-        konsentrasi = st.number_input(f'Masukkan nilai konsentrasi data {i+1}:', format="%.2f")  
-        bobot_filled = st.number_input(f'Masukkan nilai rerata bobot labu takar isi (gram) {i+1}:', format="%.4f")
-        bobot_empty = st.number_input(f'Masukkan nilai rerata bobot labu takar kosong (gram) {i+1}:', format="%.4f")
-        df = df.append({'Konsentrasi (g/mL)': konsentrasi,
-                        'Bobot Labu Takar Isi (gram)': bobot_filled,
-                        'Bobot Labu Takar Kosong (gram)': bobot_empty}, ignore_index=True)
+    # Tombol untuk menambahkan baris ke dataframe
+    if st.button('Tambah Baris'):
+        for i in range(num_data):
+            konsentrasi = st.number_input(f'Masukkan nilai konsentrasi data {i+1}:', format="%.2f")  
+            bobot_filled = st.number_input(f'Masukkan nilai rerata bobot labu takar isi (gram) {i+1}:', format="%.4f")
+            bobot_empty = st.number_input(f'Masukkan nilai rerata bobot labu takar kosong (gram) {i+1}:', format="%.4f")
+            df = df.append({'Konsentrasi (g/mL)': konsentrasi,
+                            'Bobot Labu Takar Isi (gram)': bobot_filled,
+                            'Bobot Labu Takar Kosong (gram)': bobot_empty}, ignore_index=True)
 
     # Tampilkan data input dalam bentuk tabel
     st.table(df)
