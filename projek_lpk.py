@@ -81,10 +81,10 @@ def calculate_density_section():
     # Input volume larutan
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01)
 
-    # Buat dataframe kosong untuk menyimpan data
+    # Inisialisasi DataFrame kosong untuk menyimpan data
     df = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
 
-    # Tombol untuk menambahkan baris ke dataframe
+    # Tombol untuk menambahkan baris ke DataFrame
     if st.button('Tambah Baris'):
         for i in range(num_data):
             konsentrasi = st.number_input(f'Masukkan nilai konsentrasi data {i+1}:', format="%.2f")  
@@ -125,6 +125,28 @@ def calculate_density_section():
         st.write(f'Nilai Regresi: {r:.4f}')
         st.write(f'Slope (b): {slope:.4f}')
         st.write(f'Intercept (a): {intercept:.4f}')
+
+        # Simpan hasil perhitungan ke variabel session_state
+        st.session_state.results = {
+            'x_data': x_data,
+            'y_data': y_data,
+            'slope': slope,
+            'intercept': intercept,
+            'r': r
+        }
+
+def about_us_section():
+    st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam 🧪⚗", divider="rainbow")
+    st.write("""
+    Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
+    dengan judul hubungan kerapatan dan kepekatan larutan garam. Dengan ini diharapkan dapat memudahkan untuk menghitung kerapatan 
+    dan kepekatan garam dalam larutan secara cepat dan tepat. Web Aplikasi disusun oleh :
+    1. Dinda Ariyantika              (2302520)
+    2. Ibnu Mustofa Giam             (2320529)
+    3. Putri Nabila Aji Kusuma       (2320546)
+    4. Salima Keisha Arthidia        (2320552)
+    5. Selsi Mei Doanna br Brahmana  (2320554)
+    """)
 
 if __name__ == "__main__":
     main()
