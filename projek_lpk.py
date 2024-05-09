@@ -150,3 +150,8 @@ def about_us_section():
 
 if __name__ == "__main__":
     main()
+[theme]
+base="light"
+primaryColor="#fb8e54"
+backgroundColor="#f3e9df"
+secondaryBackgroundColor="#c99548"
