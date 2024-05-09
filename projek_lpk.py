@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st # type: ignore
 
 # Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
@@ -167,5 +167,5 @@ def about_us_section():
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
 
-if__name__ == "__main__":
-    main()
+if_name_== "_main_"
+main()
