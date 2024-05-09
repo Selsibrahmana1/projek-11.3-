@@ -133,39 +133,4 @@ def calculate_density_section():
         # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi
         st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", divider="violet")
         for konsentrasi, density in zip(x_data, y_data):
-            st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
-
-        # Hitung persamaan regresi
-        slope, intercept, r = calculate_regression(x_data, y_data)
-
-        # Tampilkan hasil persamaan regresi
-        st.header("Persamaan Regresi", divider="violet")
-        st.write(f'Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}')
-        st.write(f'Nilai Regresi: {r:.4f}')
-        st.write(f'Slope (b): {slope:.4f}')
-        st.write(f'Intercept (a): {intercept:.4f}')
-
-        # Simpan hasil perhitungan ke variabel session_state
-        st.session_state.results = {
-            'x_data': x_data,
-            'y_data': y_data,
-            'slope': slope,
-            'intercept': intercept,
-            'r': r
-        }
-
-def about_us_section():
-    st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam 🧪⚗", divider="rainbow")
-    st.write("""
-    Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
-    dengan judul hubungan kerapatan dan kepekatan larutan garam. Dengan ini diharapkan dapat memudahkan untuk menghitung kerapatan 
-    dan kepekatan garam dalam larutan secara cepat dan tepat. Web Aplikasi disusun oleh :
-    1. Dinda Ariyantika              (2302520)
-    2. Ibnu Mustofa Giam             (2320529)
-    3. Putri Nabila Aji Kusuma       (2320546)
-    4. Salima Keisha Arthidia        (2320552)
-    5. Selsi Mei Doanna br Brahmana  (2320554)
-    """)
-
-if_name_== "_main_"
-main()
+            st.write(f'Konsentrasi: {konsentrasi:.2f
