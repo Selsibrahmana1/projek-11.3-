@@ -133,4 +133,4 @@ def calculate_density_section():
         # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi
         st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", divider="violet")
         for konsentrasi, density in zip(x_data, y_data):
-            st.write(f'Konsentrasi: {konsentrasi:.2f
+            st.write(f'Konsentrasi: {konsentrasi:.2f}')
