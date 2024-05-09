@@ -167,5 +167,5 @@ def about_us_section():
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
 
-if__name__ == "_main_":
+if__name__ == "__main__":
     main()
