@@ -129,4 +129,4 @@ def calculate_density_section():
         x_data = []  # Konsentrasi
         y_data = []  # Kerapatan
 
-        for konsentrasi, bobot
+        
