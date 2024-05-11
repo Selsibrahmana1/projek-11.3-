@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 def calculate_density(weight, volume):
     if volume != 0:
@@ -116,22 +115,8 @@ def calculate_density_section():
             'r': r
         }
 
-        # Plot data points
-        plt.scatter(x_data, y_data, color='blue', label='Data')
-
-        # Plot regression line
-        x_values = x_data
-        y_values = [slope * x + intercept for x in x_values]
-        plt.plot(x_values, y_values, color='red', label='Regression Line')
-
-        plt.xlabel('Konsentrasi (g/mL)')
-        plt.ylabel('Kerapatan (g/mL)')
-        plt.title('Hubungan Kerapatan dan Konsentrasi')
-        plt.legend()
-        plt.grid(True)
-
-        # Show plot
-        st.pyplot(plt)
+        # Plot data points and regression line
+        st.line_chart(pd.DataFrame({'Konsentrasi (g/mL)': x_data, 'Kerapatan (g/mL)': y_data}))
 
 def about_us_section():
     st.markdown(
