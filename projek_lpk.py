@@ -115,6 +115,10 @@ def calculate_density_section():
             'r': r
         }
 
+        # Perbarui tabel dengan hasil perhitungan
+        data_input_table['Kerapatan (g/mL)'] = y_data
+        st.write(data_input_table)
+
 def about_us_section():
     st.markdown(
         "<h1 style='text-align: center; color: white; background-color: #7544F3; padding: 0.5rem; border-radius: 0.5rem;'>"
@@ -134,4 +138,3 @@ def about_us_section():
 
 if __name__ == "__main__":
     main()
-
