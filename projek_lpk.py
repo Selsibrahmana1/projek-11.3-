@@ -73,14 +73,9 @@ def calculate_density_section():
 
     data = {'Konsentrasi (g/mL)': [], 'Bobot Labu Takar Isi (gram)': [], 'Bobot Labu Takar Kosong (gram)': []}
     for i in range(num_data):
-        konsentrasi = st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f")  
-        data['Konsentrasi (g/mL)'].append(konsentrasi)
-        
-        bobot_filled = st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
-        data['Bobot Labu Takar Isi (gram)'].append(bobot_filled)
-        
-        bobot_empty = st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
-        data['Bobot Labu Takar Kosong (gram)'].append(bobot_empty)
+        data['Konsentrasi (g/mL)'].append(st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f"))  
+        data['Bobot Labu Takar Isi (gram)'].append(st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f"))
+        data['Bobot Labu Takar Kosong (gram)'].append(st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f"))
 
     df = pd.DataFrame(data)
     st.write(df)
