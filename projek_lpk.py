@@ -72,25 +72,20 @@ def calculate_density_section():
     data_input_table = st.session_state.data_input['data']
     if len(data_input_table) != num_data:
         data_input_table = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
+        for i in range(num_data):
+            data_input_table.loc[i] = [0.0, 0.0, 0.0]  # Menggunakan loc untuk menambahkan baris ke DataFrame
         st.session_state.data_input['data'] = data_input_table
     
-    # Buat form input untuk setiap baris data
-    for i in range(num_data):
-        konsentrasi = st.text_input(f'Konsentrasi {i+1} (g/mL)', value='')
-        bobot_isi = st.text_input(f'Bobot Labu Takar Isi {i+1} (gram)', value='')
-        bobot_kosong = st.text_input(f'Bobot Labu Takar Kosong {i+1} (gram)', value='')
-        data_input_table.loc[i] = [konsentrasi, bobot_isi, bobot_kosong]
-
     st.write(data_input_table)
 
     if st.button('Hitung'):
-        x_data = data_input_table['Konsentrasi (g/mL)'].astype(float)
+        x_data = data_input_table['Konsentrasi (g/mL)']
         y_data = []  
 
         for i in range(num_data):
-            konsentrasi = float(data_input_table.iloc[i]['Konsentrasi (g/mL)'])
-            bobot_filled = float(data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)'])
-            bobot_empty = float(data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)'])
+            konsentrasi = data_input_table.iloc[i]['Konsentrasi (g/mL)']
+            bobot_filled = data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)']
+            bobot_empty = data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)']
             weight = bobot_filled - bobot_empty
 
             density = calculate_density(weight, volume)
@@ -137,5 +132,5 @@ def about_us_section():
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
 
-if __name__ == "__main__":
+if __name_- == "__main__":
     main()
