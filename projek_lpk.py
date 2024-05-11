@@ -72,21 +72,13 @@ def calculate_density_section():
 
     with st.container():
         st.subheader("Masukkan Data")
-        data_input_table = {
-            'Konsentrasi (g/mL)': [],
-            'Bobot Labu Takar Isi (gram)': [],
-            'Bobot Labu Takar Kosong (gram)': []
-        }
+        data_input_table = []
         
         for i in range(num_data):
-            konsentrasi = st.number_input(f'Konsentrasi Data {i+1}:', format="%.2f")  
-            data_input_table['Konsentrasi (g/mL)'].append(konsentrasi)
-            
+            konsentrasi = st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f")  
             bobot_filled = st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
-            data_input_table['Bobot Labu Takar Isi (gram)'].append(bobot_filled)
-            
             bobot_empty = st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
-            data_input_table['Bobot Labu Takar Kosong (gram)'].append(bobot_empty)
+            data_input_table.append((konsentrasi, bobot_filled, bobot_empty))
 
     st.markdown("---")
 
@@ -94,7 +86,7 @@ def calculate_density_section():
         x_data = []  
         y_data = []  
 
-        for konsentrasi, bobot_filled, bobot_empty in zip(data_input_table['Konsentrasi (g/mL)'], data_input_table['Bobot Labu Takar Isi (gram)'], data_input_table['Bobot Labu Takar Kosong (gram)']):
+        for konsentrasi, bobot_filled, bobot_empty in data_input_table:
             weight = bobot_filled - bobot_empty
 
             density = calculate_density(weight, volume)
