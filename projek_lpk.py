@@ -1,3 +1,6 @@
+from turtle import st
+
+
 def calculate_density_section():
     if 'data_input' not in st.session_state:
         st.session_state.data_input = {
@@ -52,14 +55,14 @@ def calculate_density_section():
         st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", divider="violet")
         for konsentrasi, bobot_filled, bobot_empty in st.session_state.data_input['data']:
             weight = bobot_filled - bobot_empty
-            density = calculate_density(weight, volume)
+            density = calculate_density(weight, volume) # type: ignore
             if density is not None:
                 x_data.append(konsentrasi)
                 y_data.append(density)
                 st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
 
         # Hitung persamaan regresi
-        slope, intercept, r = calculate_regression(x_data, y_data)
+        slope, intercept, r = calculate_regression(x_data, y_data) # type: ignore
 
         # Tampilkan hasil persamaan regresi
         st.header("Persamaan Regresi", divider="violet")
