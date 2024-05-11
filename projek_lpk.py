@@ -132,7 +132,6 @@ def about_us_section():
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
 
-File "/mount/src/projek-11.3-/projek_lpk.py", line 135
-  if __name_- == "__main__":
-              ^
+if __name__ == "__main__":
+    main()
 
