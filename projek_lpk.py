@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 # Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
@@ -53,6 +54,8 @@ def calculate_regression(x, y):
     return slope, intercept, r
 
 def main():
+    st.set_page_config(page_title="Kalkulator Kerapatan dan Kepekatan Larutan Garam", page_icon=":test_tube:")
+
     st.sidebar.title('Menu')
 
     # Sidebar menu
@@ -76,7 +79,7 @@ def calculate_density_section():
     if 'results' not in st.session_state:
         st.session_state.results = {}
 
-    st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam🧪⚗", divider="violet")
+    st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam🧪⚗", ":vial:", divider="violet")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
     Anda dapat memasukkan data konsentrasi, volume, dan rata rata bobot labu takar untuk menghitung kerapatan larutan.
@@ -112,7 +115,6 @@ def calculate_density_section():
         data_input_table['Bobot Labu Takar Kosong (gram)'].append(bobot_empty)
 
     # Tampilkan data input dalam bentuk tabel
-    st.write("### Data Input")
     st.table(pd.DataFrame(data_input_table))
 
     # Tombol untuk menghitung hasil
@@ -132,10 +134,7 @@ def calculate_density_section():
                 y_data.append(density)
 
         # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi
-        st.write("### Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
-        result_df = pd.DataFrame({'Konsentrasi (g/mL)': x_data, 'Kerapatan (g/mL)': y_data})
-        st.table
-        st.write("### Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
+        st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", ":clipboard:", divider="violet")
         result_df = pd.DataFrame({'Konsentrasi (g/mL)': x_data, 'Kerapatan (g/mL)': y_data})
         st.table(result_df)
 
@@ -143,7 +142,7 @@ def calculate_density_section():
         slope, intercept, r = calculate_regression(x_data, y_data)
 
         # Tampilkan hasil persamaan regresi
-        st.write("### Persamaan Regresi")
+        st.header("Persamaan Regresi", ":chart_with_upwards_trend:", divider="violet")
         st.write(f'Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}')
         st.write(f'Nilai Regresi: {r:.4f}')
         st.write(f'Slope (b): {slope:.4f}')
@@ -170,6 +169,6 @@ def about_us_section():
     4. Salima Keisha Arthidia        (2320552)
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
-
+    
 if __name__ == "__main__":
     main()
