@@ -72,9 +72,10 @@ def calculate_density_section():
     data_input_table = st.session_state.data_input['data']
     if len(data_input_table) != num_data:
         data_input_table = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
-        data_input_table.loc[0] = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
-        for i in range(1, num_data):  # Start appending from the second row
-            data_input_table.loc[i] = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
+        for i in range(num_data):
+            data_input_table.loc[i] = {'Konsentrasi (g/mL)': st.text_input(f'Konsentrasi {i+1}', value=''), 
+                                       'Bobot Labu Takar Isi (gram)': st.text_input(f'Bobot Labu Takar Isi {i+1}', value=''), 
+                                       'Bobot Labu Takar Kosong (gram)': st.text_input(f'Bobot Labu Takar Kosong {i+1}', value='')}
         st.session_state.data_input['data'] = data_input_table
     
     st.write(data_input_table)
