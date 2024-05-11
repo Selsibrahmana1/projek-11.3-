@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 def calculate_density(weight, volume):
     if volume != 0:
@@ -70,28 +71,25 @@ def calculate_density_section():
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=st.session_state.data_input['volume'])
     st.session_state.data_input['volume'] = volume
 
-    st.markdown("### Masukkan Data")
-    data_input_table = []
+    data = {'Konsentrasi (g/mL)': [], 'Bobot Labu Takar Isi (gram)': [], 'Bobot Labu Takar Kosong (gram)': []}
     for i in range(num_data):
         konsentrasi = st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f")  
+        data['Konsentrasi (g/mL)'].append(konsentrasi)
+        
         bobot_filled = st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
+        data['Bobot Labu Takar Isi (gram)'].append(bobot_filled)
+        
         bobot_empty = st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
-        data_input_table.append((konsentrasi, bobot_filled, bobot_empty))
+        data['Bobot Labu Takar Kosong (gram)'].append(bobot_empty)
 
-    st.markdown("### Tabel Data")
-    konsentrasi_input, bobot_filled_input, bobot_empty_input = zip(*data_input_table)
-    df = pd.DataFrame({
-        'Konsentrasi (g/mL)': konsentrasi_input,
-        'Rerata Bobot Labu Takar Isi (gram)': bobot_filled_input,
-        'Rerata Bobot Labu Takar Kosong (gram)': bobot_empty_input
-    })
-    st.table(df)
+    df = pd.DataFrame(data)
+    st.write(df)
 
-    if st.button('Hitung', key='hitung_button'):
+    if st.button('Hitung'):
         x_data = []  
         y_data = []  
 
-        for konsentrasi, bobot_filled, bobot_empty in data_input_table:
+        for konsentrasi, bobot_filled, bobot_empty in zip(data['Konsentrasi (g/mL)'], data['Bobot Labu Takar Isi (gram)'], data['Bobot Labu Takar Kosong (gram)']):
             weight = bobot_filled - bobot_empty
 
             density = calculate_density(weight, volume)
