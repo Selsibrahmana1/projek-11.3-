@@ -76,24 +76,26 @@ def calculate_density_section():
     beserta persamaan regresi.
     """)
 
-    # Initialize an empty DataFrame for data input
-    data_input_table = pd.DataFrame({
-        'Konsentrasi (g/mL)': [],
-        'Bobot Labu Takar Isi (gram)': [],
-        'Bobot Labu Takar Kosong (gram)': []
-    })
+    # Retrieve existing data from session state or initialize an empty DataFrame
+    if 'data_input' not in st.session_state:
+        st.session_state.data_input = pd.DataFrame({
+            'Konsentrasi (g/mL)': [],
+            'Bobot Labu Takar Isi (gram)': [],
+            'Bobot Labu Takar Kosong (gram)': []
+        })
 
     # Tampilkan data input dalam bentuk tabel
-    st.table(data_input_table)
+    st.table(st.session_state.data_input)
 
     # Tombol untuk menambah baris data
     if st.button('Tambah Baris Data'):
         new_row = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
-        data_input_table = data_input_table.append(new_row, ignore_index=True)
-        st.table(data_input_table)
+        st.session_state.data_input = st.session_state.data_input.append(new_row, ignore_index=True)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
+        data_input_table = st.session_state.data_input
+
         # List untuk menyimpan nilai konsentrasi, volume, dan kerapatan
         x_data = []  # Konsentrasi
         y_data = []  # Kerapatan
