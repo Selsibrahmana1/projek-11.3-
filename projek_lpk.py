@@ -71,8 +71,9 @@ def calculate_density_section():
 
     data_input_table = st.session_state.data_input['data']
     if len(data_input_table) != num_data:
-        for _ in range(len(data_input_table), num_data):
-            data_input_table = data_input_table.append({'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}, ignore_index=True)
+        data_input_table = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
+        for i in range(num_data):
+            data_input_table.loc[i] = [0.0, 0.0, 0.0]  # Menggunakan loc untuk menambahkan baris ke DataFrame
         st.session_state.data_input['data'] = data_input_table
     
     st.write(data_input_table)
