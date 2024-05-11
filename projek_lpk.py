@@ -112,7 +112,8 @@ def calculate_density_section():
         data_input_table['Bobot Labu Takar Kosong (gram)'].append(bobot_empty)
 
     # Tampilkan data input dalam bentuk tabel
-    st.table(data_input_table)
+    st.write("### Data Input")
+    st.table(pd.DataFrame(data_input_table))
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
@@ -131,15 +132,18 @@ def calculate_density_section():
                 y_data.append(density)
 
         # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi
-        st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", divider="violet")
-        for konsentrasi, density in zip(x_data, y_data):
-            st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
+        st.write("### Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
+        result_df = pd.DataFrame({'Konsentrasi (g/mL)': x_data, 'Kerapatan (g/mL)': y_data})
+        st.table
+        st.write("### Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
+        result_df = pd.DataFrame({'Konsentrasi (g/mL)': x_data, 'Kerapatan (g/mL)': y_data})
+        st.table(result_df)
 
         # Hitung persamaan regresi
         slope, intercept, r = calculate_regression(x_data, y_data)
 
         # Tampilkan hasil persamaan regresi
-        st.header("Persamaan Regresi", divider="violet")
+        st.write("### Persamaan Regresi")
         st.write(f'Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}')
         st.write(f'Nilai Regresi: {r:.4f}')
         st.write(f'Slope (b): {slope:.4f}')
