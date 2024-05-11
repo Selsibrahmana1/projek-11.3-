@@ -70,7 +70,7 @@ def calculate_density_section():
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=st.session_state.data_input['volume'])
     st.session_state.data_input['volume'] = volume
 
-    with st.beta_container():
+    with st.container():
         st.subheader("Masukkan Data")
         data_input_table = {
             'Konsentrasi (g/mL)': [],
@@ -137,7 +137,7 @@ def about_us_section():
     3. Putri Nabila Aji Kusuma       (2320546)
     4. Salima Keisha Arthidia        (2320552)
     5. Selsi Mei Doanna br Brahmana  (2320554)
-    """, unsafe_allow_html=True)
+    """)
 
 if __name__ == "__main__":
     main()
