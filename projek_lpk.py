@@ -30,6 +30,9 @@ def calculate_regression(x, y):
         tuple: Tuple berisi nilai slope (m), intercept (c), dan koefisien korelasi (r) dari persamaan regresi.
     """
     n = len(x)
+    if n == 0:
+        return 0, 0, 0  # Mengembalikan nilai default jika tidak ada data
+
     x_sum = sum(x)
     y_sum = sum(y)
     xy_sum = sum(x_val * y_val for x_val, y_val in zip(x, y))
@@ -65,7 +68,6 @@ def calculate_density_section():
     # Initialize an empty DataFrame for data input
     data_input_table = pd.DataFrame({
         'Konsentrasi (g/mL)': [],
-        'Volume (mL)': [],
         'Bobot Labu Takar Isi (gram)': [],
         'Bobot Labu Takar Kosong (gram)': []
     })
@@ -75,7 +77,7 @@ def calculate_density_section():
 
     # Tombol untuk menambah baris data
     if st.button('Tambah Baris Data'):
-        new_row = {'Konsentrasi (g/mL)': 0.0, 'Volume (mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
+        new_row = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
         data_input_table = pd.concat([data_input_table, pd.DataFrame([new_row])], ignore_index=True)
         st.table(data_input_table)
 
@@ -87,7 +89,6 @@ def calculate_density_section():
 
         for index, row in data_input_table.iterrows():
             konsentrasi = row['Konsentrasi (g/mL)']
-            volume = row['Volume (mL)']
             bobot_filled = row['Bobot Labu Takar Isi (gram)']
             bobot_empty = row['Bobot Labu Takar Kosong (gram)']
 
@@ -95,7 +96,7 @@ def calculate_density_section():
             weight = bobot_filled - bobot_empty
 
             # Menghitung kerapatan
-            density = calculate_density(weight, volume)  
+            density = calculate_density(weight, volume=1.0)  # Menggunakan volume default 1.0 mL
             if density is not None:
                 x_data.append(konsentrasi)
                 y_data.append(density)
