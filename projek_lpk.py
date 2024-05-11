@@ -62,7 +62,7 @@ def main():
     if selected_menu == 'Kalkulator Kerapatan dan Kepekatan':
         calculate_density_section()
     elif selected_menu == 'Tentang Kami':
-        about_us_section() # type: ignore
+        about_us_section()
 
 def calculate_density_section():
     if 'data_input' not in st.session_state:
@@ -121,4 +121,10 @@ def calculate_density_section():
             density = calculate_density(weight, volume)
             if density is not None:
                 x_data.append(konsentrasi)
-                y_data.append
+                y_data.append(density)
+                st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
+
+        # Hitung persamaan regresi
+        slope, intercept, r = calculate_regression(x_data, y_data)
+
+        # Tampilkan hasil persamaan
