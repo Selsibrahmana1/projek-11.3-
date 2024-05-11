@@ -79,7 +79,13 @@ def calculate_density_section():
         data_input_table.append((konsentrasi, bobot_filled, bobot_empty))
 
     st.markdown("### Tabel Data")
-    st.table(data_input_table)
+    konsentrasi_input, bobot_filled_input, bobot_empty_input = zip(*data_input_table)
+    df = pd.DataFrame({
+        'Konsentrasi (g/mL)': konsentrasi_input,
+        'Rerata Bobot Labu Takar Isi (gram)': bobot_filled_input,
+        'Rerata Bobot Labu Takar Kosong (gram)': bobot_empty_input
+    })
+    st.table(df)
 
     if st.button('Hitung', key='hitung_button'):
         x_data = []  
