@@ -89,6 +89,11 @@ def calculate_density_section():
     st.write(data_input_table)
 
     if st.button('Hitung'):
+        # Cek apakah ada kolom yang belum diisi
+        if data_input_table.isnull().values.any():
+            st.error('Silakan lengkapi semua kolom sebelum melakukan perhitungan.')
+            return
+
         x_data = data_input_table['Konsentrasi (g/mL)']
         y_data = []  
 
