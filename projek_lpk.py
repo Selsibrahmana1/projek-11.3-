@@ -18,7 +18,9 @@ def calculate_density(weight, volume):
     else:
         return None
 
-def calculate_density_section():
+def main():
+    st.set_page_config(page_title="Kalkulator Kerapatan dan Kepekatan Larutan Garam", page_icon=":test_tube:")
+
     st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam🧪⚗", ":vial:", divider="violet")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
@@ -45,7 +47,7 @@ def calculate_density_section():
         st.write(data_input_table)
 
     # Tombol untuk menghitung hasil
-    if st.button('Hitung'):
+    if st.button('Hitung') and not data_input_table.empty:
         # List untuk menyimpan nilai konsentrasi, volume, dan kerapatan
         x_data = []  # Konsentrasi
         y_data = []  # Kerapatan
@@ -69,18 +71,5 @@ def calculate_density_section():
         result_df = pd.DataFrame({'Konsentrasi (g/mL)': x_data, 'Kerapatan (g/mL)': y_data})
         st.write(result_df)
 
-def main():
-    st.set_page_config(page_title="Kalkulator Kerapatan dan Kepekatan Larutan Garam", page_icon=":test_tube:")
-
-    st.sidebar.title('Menu')
-
-    # Sidebar menu
-    menu_options = ['Kalkulator Kerapatan dan Kepekatan']
-    selected_menu = st.sidebar.radio('Navigasi', menu_options)
-
-    if selected_menu == 'Kalkulator Kerapatan dan Kepekatan':
-        calculate_density_section()
-
 if __name__ == "__main__":
     main()
-s
