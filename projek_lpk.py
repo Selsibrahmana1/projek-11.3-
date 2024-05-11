@@ -71,20 +71,23 @@ def calculate_density_section():
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=st.session_state.data_input['volume'])
     st.session_state.data_input['volume'] = volume
 
-    data = {'Konsentrasi (g/mL)': [], 'Bobot Labu Takar Isi (gram)': [], 'Bobot Labu Takar Kosong (gram)': []}
+    data_input_table = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
+    
     for i in range(num_data):
-        data['Konsentrasi (g/mL)'].append(st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f"))  
-        data['Bobot Labu Takar Isi (gram)'].append(st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f"))
-        data['Bobot Labu Takar Kosong (gram)'].append(st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f"))
-
-    df = pd.DataFrame(data)
-    st.write(df)
+        konsentrasi = st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f")  
+        bobot_filled = st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
+        bobot_empty = st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
+        data_input_table = data_input_table.append({'Konsentrasi (g/mL)': konsentrasi,
+                                                    'Bobot Labu Takar Isi (gram)': bobot_filled,
+                                                    'Bobot Labu Takar Kosong (gram)': bobot_empty}, ignore_index=True)
+    
+    st.write(data_input_table)
 
     if st.button('Hitung'):
         x_data = []  
         y_data = []  
 
-        for konsentrasi, bobot_filled, bobot_empty in zip(data['Konsentrasi (g/mL)'], data['Bobot Labu Takar Isi (gram)'], data['Bobot Labu Takar Kosong (gram)']):
+        for konsentrasi, bobot_filled, bobot_empty in zip(data_input_table['Konsentrasi (g/mL)'], data_input_table['Bobot Labu Takar Isi (gram)'], data_input_table['Bobot Labu Takar Kosong (gram)']):
             weight = bobot_filled - bobot_empty
 
             density = calculate_density(weight, volume)
