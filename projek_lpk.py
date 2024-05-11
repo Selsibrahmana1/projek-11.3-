@@ -68,17 +68,6 @@ def main():
         about_us_section()
 
 def calculate_density_section():
-    if 'data_input' not in st.session_state:
-        st.session_state.data_input = {
-            'num_data': 1,
-            'volume': 0.01,
-            'konsentrasi': [],
-            'bobot_filled': [],
-            'bobot_empty': [],
-        }
-    if 'results' not in st.session_state:
-        st.session_state.results = {}
-
     st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam🧪⚗", ":vial:", divider="violet")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
@@ -87,35 +76,19 @@ def calculate_density_section():
     beserta persamaan regresi.
     """)
 
-    # Input jumlah data konsentrasi
-    num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=st.session_state.data_input['num_data'])
-    st.session_state.data_input['num_data'] = num_data
-
-    # Input volume larutan
-    volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=st.session_state.data_input['volume'])
-    st.session_state.data_input['volume'] = volume
-
-    # Input data konsentrasi, volume, dan bobot
-    st.write("Masukkan data konsentrasi dan bobot labu takar untuk perhitungan kerapatan:")
-    
-    data_input_table = {
-        'Konsentrasi (g/mL)': [],
-        'Bobot Labu Takar Isi (gram)': [],
-        'Bobot Labu Takar Kosong (gram)': []
-    }
-    
-    for i in range(num_data):
-        konsentrasi = st.number_input(f'Masukkan nilai konsentrasi data {i+1}:', format="%.2f")  
-        data_input_table['Konsentrasi (g/mL)'].append(konsentrasi)
-        
-        bobot_filled = st.number_input(f'Masukkan nilai rerata bobot labu takar isi (gram) {i+1}:', format="%.4f")
-        data_input_table['Bobot Labu Takar Isi (gram)'].append(bobot_filled)
-        
-        bobot_empty = st.number_input(f'Masukkan nilai rerata bobot labu takar kosong (gram) {i+1}:', format="%.4f")
-        data_input_table['Bobot Labu Takar Kosong (gram)'].append(bobot_empty)
-
     # Tampilkan data input dalam bentuk tabel
-    st.table(pd.DataFrame(data_input_table))
+    data_input_table = pd.DataFrame({
+        'Konsentrasi (g/mL)': [0.0],
+        'Bobot Labu Takar Isi (gram)': [0.0],
+        'Bobot Labu Takar Kosong (gram)': [0.0]
+    })
+    st.table(data_input_table)
+
+    # Tombol untuk menambah baris data
+    if st.button('Tambah Baris Data'):
+        new_row = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
+        data_input_table = data_input_table.append(new_row, ignore_index=True)
+        st.table(data_input_table)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
@@ -123,12 +96,16 @@ def calculate_density_section():
         x_data = []  # Konsentrasi
         y_data = []  # Kerapatan
 
-        for konsentrasi, bobot_filled, bobot_empty in zip(data_input_table['Konsentrasi (g/mL)'], data_input_table['Bobot Labu Takar Isi (gram)'], data_input_table['Bobot Labu Takar Kosong (gram)']):
+        for index, row in data_input_table.iterrows():
+            konsentrasi = row['Konsentrasi (g/mL)']
+            bobot_filled = row['Bobot Labu Takar Isi (gram)']
+            bobot_empty = row['Bobot Labu Takar Kosong (gram)']
+
             # Menghitung bobot sebenarnya
             weight = bobot_filled - bobot_empty
 
             # Menghitung kerapatan
-            density = calculate_density(weight, volume)
+            density = calculate_density(weight, volume=1.0)  # Menggunakan volume default 1.0 mL
             if density is not None:
                 x_data.append(konsentrasi)
                 y_data.append(density)
