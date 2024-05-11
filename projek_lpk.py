@@ -77,9 +77,7 @@ def calculate_density_section():
 
     # Tombol untuk menambah baris data
     if st.button('Tambah Baris Data'):
-        new_row = {'Konsentrasi (g/mL)': st.number_input('Konsentrasi (g/mL)', value=0.0, step=0.001),
-                   'Bobot Labu Takar Isi (gram)': st.number_input('Bobot Labu Takar Isi (gram)', value=0.0, step=0.001),
-                   'Bobot Labu Takar Kosong (gram)': st.number_input('Bobot Labu Takar Kosong (gram)', value=0.0, step=0.001)}
+        new_row = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
         data_input_table = pd.concat([data_input_table, pd.DataFrame([new_row])], ignore_index=True)
         st.table(data_input_table)
 
