@@ -77,9 +77,7 @@ def calculate_density_section():
         konsentrasi = st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f")  
         bobot_filled = st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
         bobot_empty = st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
-        data_input_table = data_input_table.append({'Konsentrasi (g/mL)': konsentrasi,
-                                                    'Bobot Labu Takar Isi (gram)': bobot_filled,
-                                                    'Bobot Labu Takar Kosong (gram)': bobot_empty}, ignore_index=True)
+        data_input_table.loc[i] = [konsentrasi, bobot_filled, bobot_empty]
     
     st.write(data_input_table)
 
