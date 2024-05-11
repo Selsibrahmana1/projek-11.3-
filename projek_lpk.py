@@ -76,12 +76,14 @@ def calculate_density_section():
     beserta persamaan regresi.
     """)
 
-    # Tampilkan data input dalam bentuk tabel
+    # Initialize an empty DataFrame for data input
     data_input_table = pd.DataFrame({
-        'Konsentrasi (g/mL)': [0.0],
-        'Bobot Labu Takar Isi (gram)': [0.0],
-        'Bobot Labu Takar Kosong (gram)': [0.0]
+        'Konsentrasi (g/mL)': [],
+        'Bobot Labu Takar Isi (gram)': [],
+        'Bobot Labu Takar Kosong (gram)': []
     })
+
+    # Tampilkan data input dalam bentuk tabel
     st.table(data_input_table)
 
     # Tombol untuk menambah baris data
