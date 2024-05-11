@@ -73,13 +73,15 @@ def calculate_density_section():
     })
 
     # Tampilkan data input dalam bentuk tabel
-    st.table(data_input_table)
+    st.write(data_input_table)
 
     # Tombol untuk menambah baris data
     if st.button('Tambah Baris Data'):
-        new_row = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
+        new_row = {'Konsentrasi (g/mL)': st.number_input('Konsentrasi (g/mL)', value=0.0, step=0.001),
+                   'Bobot Labu Takar Isi (gram)': st.number_input('Bobot Labu Takar Isi (gram)', value=0.0, step=0.001),
+                   'Bobot Labu Takar Kosong (gram)': st.number_input('Bobot Labu Takar Kosong (gram)', value=0.0, step=0.001)}
         data_input_table = pd.concat([data_input_table, pd.DataFrame([new_row])], ignore_index=True)
-        st.table(data_input_table)
+        st.write(data_input_table)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
@@ -104,7 +106,7 @@ def calculate_density_section():
         # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi
         st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", ":clipboard:", divider="violet")
         result_df = pd.DataFrame({'Konsentrasi (g/mL)': x_data, 'Kerapatan (g/mL)': y_data})
-        st.table(result_df)
+        st.write(result_df)
 
         # Hitung persamaan regresi
         slope, intercept, r = calculate_regression(x_data, y_data)
