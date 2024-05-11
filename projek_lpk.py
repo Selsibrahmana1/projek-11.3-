@@ -63,21 +63,19 @@ def calculate_density_section():
     persamaan regresi.
     """)
 
-    num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=st.session_state.data_input['num_data'])
-    st.session_state.data_input['num_data'] = num_data
-
-    volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=st.session_state.data_input['volume'])
-    st.session_state.data_input['volume'] = volume
-
+    num_data = st.session_state.data_input['num_data']
+    volume = st.session_state.data_input['volume']
     data_input_table = st.session_state.data_input['data']
-    if len(data_input_table) != num_data:
-        data_input_table = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
-        for i in range(num_data):
-            data_input_table.loc[i] = [0.0, 0.0, 0.0]  # Menggunakan loc untuk menambahkan baris ke DataFrame
-        st.session_state.data_input['data'] = data_input_table
     
-    st.write(data_input_table)
+    for i in range(num_data):
+        konsentrasi = st.number_input(f'Konsentrasi ke-{i+1} (g/mL):', key=f'konsentrasi_{i}', format="%.4f")
+        bobot_filled = st.number_input(f'Bobot Labu Takar Isi ke-{i+1} (gram):', key=f'bobot_filled_{i}', format="%.4f")
+        bobot_empty = st.number_input(f'Bobot Labu Takar Kosong ke-{i+1} (gram):', key=f'bobot_empty_{i}', format="%.4f")
+        
+        data_input_table.loc[i] = [konsentrasi, bobot_filled, bobot_empty]
 
+    st.session_state.data_input['data'] = data_input_table
+    
     if st.button('Hitung'):
         x_data = data_input_table['Konsentrasi (g/mL)']
         y_data = []  
@@ -97,7 +95,7 @@ def calculate_density_section():
         st.markdown("<h2 style='color: #7544F3;'>Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi</h2>", unsafe_allow_html=True)
         for konsentrasi, density in zip(x_data, y_data):
             if density is not None:
-                st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
+                st.write(f'Konsentrasi: {konsentrasi:.4f}, Kerapatan: {density:.4f} g/mL')
 
         slope, intercept, r = calculate_regression(x_data, y_data)
 
