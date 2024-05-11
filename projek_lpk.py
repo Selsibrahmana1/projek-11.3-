@@ -76,6 +76,16 @@ def calculate_density_section():
             data_input_table.loc[i] = [0.0, 0.0, 0.0]  # Menggunakan loc untuk menambahkan baris ke DataFrame
         st.session_state.data_input['data'] = data_input_table
     
+    # Menampilkan tabel dengan widget input data
+    for i in range(num_data):
+        konsentrasi_input = st.number_input(f'Masukkan konsentrasi ke-{i+1} (g/mL)', value=data_input_table.iloc[i]['Konsentrasi (g/mL)'])
+        isi_input = st.number_input(f'Masukkan bobot labu takar isi ke-{i+1} (gram)', value=data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)'])
+        kosong_input = st.number_input(f'Masukkan bobot labu takar kosong ke-{i+1} (gram)', value=data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)'])
+        
+        data_input_table.iloc[i]['Konsentrasi (g/mL)'] = konsentrasi_input
+        data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)'] = isi_input
+        data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)'] = kosong_input
+    
     st.write(data_input_table)
 
     if st.button('Hitung'):
