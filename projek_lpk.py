@@ -60,7 +60,7 @@ def calculate_density_section():
     st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam🧪⚗", ":vial:", divider="violet")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
-    Anda dapat memasukkan data konsentrasi, volume, dan rata rata bobot labu takar untuk menghitung kerapatan larutan.
+    Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot labu takar untuk menghitung kerapatan larutan.
     Setelah itu, kalkulator akan menampilkan hasil perhitungan kerapatan untuk setiap konsentrasi dan regresi beserta 
     beserta persamaan regresi.
     """)
@@ -73,13 +73,14 @@ def calculate_density_section():
     })
 
     # Tampilkan data input dalam bentuk tabel
-    st.table(data_input_table)
+    data_input_table = st.empty()
+    data_input_table.table(data_input_table)
 
     # Tombol untuk menambah baris data
     if st.button('Tambah Baris Data'):
         new_row = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
         data_input_table = pd.concat([data_input_table, pd.DataFrame([new_row])], ignore_index=True)
-        st.table(data_input_table)
+        data_input_table.table(data_input_table)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
