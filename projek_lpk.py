@@ -76,26 +76,24 @@ def calculate_density_section():
     beserta persamaan regresi.
     """)
 
-    # Retrieve existing data from session state or initialize an empty DataFrame
-    if 'data_input' not in st.session_state:
-        st.session_state.data_input = pd.DataFrame({
-            'Konsentrasi (g/mL)': [],
-            'Bobot Labu Takar Isi (gram)': [],
-            'Bobot Labu Takar Kosong (gram)': []
-        })
+    # Initialize an empty DataFrame for data input
+    data_input_table = pd.DataFrame({
+        'Konsentrasi (g/mL)': [],
+        'Bobot Labu Takar Isi (gram)': [],
+        'Bobot Labu Takar Kosong (gram)': []
+    })
 
     # Tampilkan data input dalam bentuk tabel
-    st.table(st.session_state.data_input)
+    st.table(data_input_table)
 
     # Tombol untuk menambah baris data
     if st.button('Tambah Baris Data'):
         new_row = {'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}
-        st.session_state.data_input = st.session_state.data_input.append(new_row, ignore_index=True)
+        data_input_table = data_input_table.append(new_row, ignore_index=True)
+        st.table(data_input_table)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
-        data_input_table = st.session_state.data_input
-
         # List untuk menyimpan nilai konsentrasi, volume, dan kerapatan
         x_data = []  # Konsentrasi
         y_data = []  # Kerapatan
@@ -150,6 +148,6 @@ def about_us_section():
     4. Salima Keisha Arthidia        (2320552)
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
-    
+
 if __name__ == "__main__":
     main()
