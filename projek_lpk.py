@@ -130,10 +130,12 @@ def calculate_density_section():
                 x_data.append(konsentrasi)
                 y_data.append(density)
 
-        # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi
-        st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", divider="violet")
-        for konsentrasi, density in zip(x_data, y_data):
-            st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
+        # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi dalam bentuk tabel
+        result_table = {
+            'Konsentrasi (g/mL)': x_data,
+            'Kerapatan (g/mL)': y_data
+        }
+        st.table(result_table)
 
         # Hitung persamaan regresi
         slope, intercept, r = calculate_regression(x_data, y_data)
