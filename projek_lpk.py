@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def calculate_density(weight, volume):
     if volume != 0:
@@ -76,24 +77,9 @@ def calculate_density_section():
             data_input_table.loc[i] = [0.0, 0.0, 0.0]  # Menggunakan loc untuk menambahkan baris ke DataFrame
         st.session_state.data_input['data'] = data_input_table
     
-    # Menampilkan tabel dengan widget input data
-    for i in range(num_data):
-        konsentrasi_input = st.number_input(f'Masukkan konsentrasi ke-{i+1} (g/mL)', value=data_input_table.iloc[i]['Konsentrasi (g/mL)'])
-        isi_input = st.number_input(f'Masukkan bobot labu takar isi ke-{i+1} (gram)', value=data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)'])
-        kosong_input = st.number_input(f'Masukkan bobot labu takar kosong ke-{i+1} (gram)', value=data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)'])
-        
-        data_input_table.iloc[i]['Konsentrasi (g/mL)'] = konsentrasi_input
-        data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)'] = isi_input
-        data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)'] = kosong_input
-    
     st.write(data_input_table)
 
     if st.button('Hitung'):
-        # Cek apakah ada kolom yang belum diisi
-        if data_input_table.isnull().values.any():
-            st.error('Silakan lengkapi semua kolom sebelum melakukan perhitungan.')
-            return
-
         x_data = data_input_table['Konsentrasi (g/mL)']
         y_data = []  
 
@@ -130,9 +116,22 @@ def calculate_density_section():
             'r': r
         }
 
-        # Perbarui tabel dengan hasil perhitungan
-        data_input_table['Kerapatan (g/mL)'] = y_data
-        st.write(data_input_table)
+        # Plot data points
+        plt.scatter(x_data, y_data, color='blue', label='Data')
+
+        # Plot regression line
+        x_values = x_data
+        y_values = [slope * x + intercept for x in x_values]
+        plt.plot(x_values, y_values, color='red', label='Regression Line')
+
+        plt.xlabel('Konsentrasi (g/mL)')
+        plt.ylabel('Kerapatan (g/mL)')
+        plt.title('Hubungan Kerapatan dan Konsentrasi')
+        plt.legend()
+        plt.grid(True)
+
+        # Show plot
+        st.pyplot(plt)
 
 def about_us_section():
     st.markdown(
