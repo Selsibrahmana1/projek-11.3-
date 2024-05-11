@@ -85,16 +85,18 @@ def calculate_density_section():
         y_data = []  
 
         for i in range(num_data):
-            konsentrasi = data_input_table.iloc[i]['Konsentrasi (g/mL)']
-            bobot_filled = data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)']
-            bobot_empty = data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)']
-            weight = bobot_filled - bobot_empty
-
-            density = calculate_density(weight, volume)
-            if density is not None:
-                y_data.append(density)
-            else:
-                y_data.append(None)
+            try:
+                konsentrasi = float(data_input_table.iloc[i]['Konsentrasi (g/mL)'])
+                bobot_filled = float(data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)'])
+                bobot_empty = float(data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)'])
+                weight = bobot_filled - bobot_empty
+                density = calculate_density(weight, volume)
+                if density is not None:
+                    y_data.append(density)
+                else:
+                    y_data.append(None)
+            except ValueError:
+                st.error(f'Pastikan semua input pada baris {i+1} adalah angka.')
 
         st.markdown("<h2 style='color: #7544F3;'>Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi</h2>", unsafe_allow_html=True)
         for konsentrasi, density in zip(x_data, y_data):
