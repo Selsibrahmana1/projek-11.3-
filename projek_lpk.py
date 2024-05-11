@@ -70,28 +70,34 @@ def calculate_density_section():
     st.session_state.data_input['volume'] = volume
 
     data_input_table = st.session_state.data_input['data']
+    if len(data_input_table) != num_data:
+        data_input_table = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
+        for i in range(num_data):
+            data_input_table = data_input_table.append({'Konsentrasi (g/mL)': 0.0, 'Bobot Labu Takar Isi (gram)': 0.0, 'Bobot Labu Takar Kosong (gram)': 0.0}, ignore_index=True)
+        st.session_state.data_input['data'] = data_input_table
+    
     st.write(data_input_table)
 
     if st.button('Hitung'):
-        for i in range(num_data):
-            konsentrasi = st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f")  
-            bobot_filled = st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
-            bobot_empty = st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
-            data_input_table.loc[i] = [konsentrasi, bobot_filled, bobot_empty]
-        
         x_data = data_input_table['Konsentrasi (g/mL)']
         y_data = []  
 
-        for bobot_filled, bobot_empty in zip(data_input_table['Bobot Labu Takar Isi (gram)'], data_input_table['Bobot Labu Takar Kosong (gram)']):
+        for i in range(num_data):
+            konsentrasi = data_input_table.iloc[i]['Konsentrasi (g/mL)']
+            bobot_filled = data_input_table.iloc[i]['Bobot Labu Takar Isi (gram)']
+            bobot_empty = data_input_table.iloc[i]['Bobot Labu Takar Kosong (gram)']
             weight = bobot_filled - bobot_empty
 
             density = calculate_density(weight, volume)
             if density is not None:
                 y_data.append(density)
+            else:
+                y_data.append(None)
 
         st.markdown("<h2 style='color: #7544F3;'>Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi</h2>", unsafe_allow_html=True)
         for konsentrasi, density in zip(x_data, y_data):
-            st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
+            if density is not None:
+                st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
 
         slope, intercept, r = calculate_regression(x_data, y_data)
 
