@@ -70,12 +70,16 @@ def calculate_density_section():
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=st.session_state.data_input['volume'])
     st.session_state.data_input['volume'] = volume
 
+    st.markdown("### Masukkan Data")
     data_input_table = []
     for i in range(num_data):
         konsentrasi = st.number_input(f'Konsentrasi Data {i+1} (g/mL):', format="%.2f")  
         bobot_filled = st.number_input(f'Rerata Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
         bobot_empty = st.number_input(f'Rerata Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
         data_input_table.append((konsentrasi, bobot_filled, bobot_empty))
+
+    st.markdown("### Tabel Data")
+    st.table(data_input_table)
 
     if st.button('Hitung', key='hitung_button'):
         x_data = []  
