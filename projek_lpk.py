@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
@@ -53,17 +54,17 @@ def calculate_density_section():
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
-        calculate_results()
+        calculate_results(volume)
 
 # Fungsi untuk menghitung hasil
-def calculate_results():
+def calculate_results(volume):
     data_input = st.session_state.data_input
     x_data = []  # Konsentrasi
     y_data = []  # Kerapatan
 
     for _, row in data_input.iterrows():
         weight = row['Bobot Labu Takar Isi (gram)'] - row['Bobot Labu Takar Kosong (gram)']
-        density = calculate_density(weight, st.session_state.volume)
+        density = calculate_density(weight, volume)
         if density is not None:
             x_data.append(row['Konsentrasi (g/mL)'])
             y_data.append(density)
@@ -72,37 +73,14 @@ def calculate_results():
     for konsentrasi, density in zip(x_data, y_data):
         st.write(f'- Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
 
-    slope, intercept, r = calculate_regression(x_data, y_data)
-
-    st.header("Persamaan Regresi")
-    st.write(f'- Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}')
-    st.write(f'- Nilai Regresi: {r:.4f}')
-    st.write(f'- Slope (b): {slope:.4f}')
-    st.write(f'- Intercept (a): {intercept:.4f}')
-
-# Fungsi untuk menghitung regresi
-def calculate_regression(x, y):
-    n = len(x)
-    x_sum = sum(x)
-    y_sum = sum(y)
-    xy_sum = sum(x_val * y_val for x_val, y_val in zip(x, y))
-    x_squared_sum = sum(x_val ** 2 for x_val in x)
-    y_squared_sum = sum(y_val ** 2 for y_val in y)
-
-    r_numerator = n * xy_sum - x_sum * y_sum
-    r_denominator = ((n * x_squared_sum - x_sum ** 2) * (n * y_squared_sum - y_sum ** 2)) ** 0.5
-    if r_denominator != 0:
-        r = r_numerator / r_denominator
-    else:
-        r = 0
-
-    if (n * x_squared_sum - x_sum ** 2) != 0:  
-        slope = r_numerator / (n * x_squared_sum - x_sum ** 2)
-    else:
-        slope = 0
-    intercept = (y_sum - slope * x_sum) / n
-
-    return slope, intercept, r
+    # Plot grafik
+    plt.figure(figsize=(8, 6))
+    plt.scatter(x_data, y_data, color='blue')
+    plt.title('Grafik Hubungan Kerapatan dan Kepekatan Larutan Garam')
+    plt.xlabel('Kerapatan (g/mL)')
+    plt.ylabel('Kepekatan')
+    plt.grid(True)
+    st.pyplot(plt)
 
 # Bagian "Tentang Kami"
 def about_us_section():
