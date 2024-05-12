@@ -2,55 +2,10 @@ import streamlit as st
 
 # Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
-    """
-    Fungsi ini menghitung kerapatan suatu zat berdasarkan berat dan volume.
-    
-    Parameters:
-        weight (float): Berat zat dalam gram.
-        volume (float): Volume zat dalam mililiter.
-    
-    Returns:
-        float: Nilai kerapatan zat dalam gram per mililiter.
-    """
     if volume != 0:
         return weight / volume
     else:
         return None
-
-def calculate_regression(x, y):
-    """
-    Fungsi ini menghitung persamaan regresi linear berdasarkan dua set data.
-    
-    Parameters:
-        x (list of float): Data untuk sumbu x.
-        y (list of float): Data untuk sumbu y.
-    
-    Returns:
-        tuple: Tuple berisi nilai slope (m), intercept (c), dan koefisien korelasi (r) dari persamaan regresi.
-    """
-    n = len(x)
-    x_sum = sum(x)
-    y_sum = sum(y)
-    xy_sum = sum(x_val * y_val for x_val, y_val in zip(x, y))
-    x_squared_sum = sum(x_val ** 2 for x_val in x)
-    y_squared_sum = sum(y_val ** 2 for y_val in y)
-
-    # Hitung koefisien korelasi (r)
-    r_numerator = n * xy_sum - x_sum * y_sum
-    r_denominator = ((n * x_squared_sum - x_sum ** 2) * (n * y_squared_sum - y_sum ** 2)) ** 0.5
-    if r_denominator != 0:
-        r = r_numerator / r_denominator
-    else:
-        r = 0
-
-    # Hitung slope (m) dan intercept (c) dari persamaan regresi
-    if (n * x_squared_sum - x_sum ** 2) != 0:  # Cek untuk pembagian dengan nol
-        slope = r_numerator / (n * x_squared_sum - x_sum ** 2)
-    else:
-        slope = 0
-    intercept = (y_sum - slope * x_sum) / n
-
-    return slope, intercept, r
 
 def main():
     st.sidebar.title('Menu')
@@ -76,12 +31,10 @@ def calculate_density_section():
     if 'results' not in st.session_state:
         st.session_state.results = {}
 
-    st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam🧪⚗", divider="violet")
+    st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam", align='center')
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
-    Anda dapat memasukkan data konsentrasi, volume, dan rata rata bobot labu takar untuk menghitung kerapatan larutan.
-    Setelah itu, kalkulator akan menampilkan hasil perhitungan kerapatan untuk setiap konsentrasi dan regresi beserta 
-    beserta persamaan regresi.
+    Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot labu takar untuk menghitung kerapatan larutan.
     """)
 
     # Input jumlah data konsentrasi
@@ -93,69 +46,71 @@ def calculate_density_section():
     st.session_state.data_input['volume'] = volume
 
     # Input data konsentrasi, volume, dan bobot
-    st.write("Masukkan data konsentrasi dan bobot labu takar untuk perhitungan kerapatan:")
-    
-    data_input_table = {
-        'Konsentrasi (g/mL)': [],
-        'Bobot Labu Takar Isi (gram)': [],
-        'Bobot Labu Takar Kosong (gram)': []
-    }
+    st.subheader("Masukkan Data Konsentrasi dan Bobot Labu Takar:")
     
     for i in range(num_data):
-        konsentrasi = st.number_input(f'Masukkan nilai konsentrasi data {i+1}:', format="%.2f")  
-        data_input_table['Konsentrasi (g/mL)'].append(konsentrasi)
-        
-        bobot_filled = st.number_input(f'Masukkan nilai rerata bobot labu takar isi (gram) {i+1}:', format="%.4f")
-        data_input_table['Bobot Labu Takar Isi (gram)'].append(bobot_filled)
-        
-        bobot_empty = st.number_input(f'Masukkan nilai rerata bobot labu takar kosong (gram) {i+1}:', format="%.4f")
-        data_input_table['Bobot Labu Takar Kosong (gram)'].append(bobot_empty)
-
-    # Tampilkan data input dalam bentuk tabel
-    st.table(data_input_table)
+        st.write(f"**Data {i+1}:**")
+        konsentrasi = st.number_input('Konsentrasi (g/mL):', format="%.2f")  
+        bobot_filled = st.number_input('Bobot Labu Takar Isi (gram):', format="%.4f")
+        bobot_empty = st.number_input('Bobot Labu Takar Kosong (gram):', format="%.4f")
+        st.write("---")
+        st.session_state.data_input['konsentrasi'].append(konsentrasi)
+        st.session_state.data_input['bobot_filled'].append(bobot_filled)
+        st.session_state.data_input['bobot_empty'].append(bobot_empty)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
-        # List untuk menyimpan nilai konsentrasi, volume, dan kerapatan
-        x_data = []  # Konsentrasi
-        y_data = []  # Kerapatan
+        calculate_results()
 
-        for konsentrasi, bobot_filled, bobot_empty in zip(data_input_table['Konsentrasi (g/mL)'], data_input_table['Bobot Labu Takar Isi (gram)'], data_input_table['Bobot Labu Takar Kosong (gram)']):
-            # Menghitung bobot sebenarnya
-            weight = bobot_filled - bobot_empty
+def calculate_results():
+    data_input = st.session_state.data_input
+    x_data = []  # Konsentrasi
+    y_data = []  # Kerapatan
 
-            # Menghitung kerapatan
-            density = calculate_density(weight, volume)
-            if density is not None:
-                x_data.append(konsentrasi)
-                y_data.append(density)
+    for konsentrasi, bobot_filled, bobot_empty in zip(data_input['konsentrasi'], data_input['bobot_filled'], data_input['bobot_empty']):
+        weight = bobot_filled - bobot_empty
+        density = calculate_density(weight, data_input['volume'])
+        if density is not None:
+            x_data.append(konsentrasi)
+            y_data.append(density)
 
-        # Tampilkan hasil perhitungan kerapatan untuk setiap konsentrasi
-        st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi", divider="violet")
-        for konsentrasi, density in zip(x_data, y_data):
-            st.write(f'Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
+    st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
+    for konsentrasi, density in zip(x_data, y_data):
+        st.write(f'- Konsentrasi: {konsentrasi:.2f}, Kerapatan: {density:.4f} g/mL')
 
-        # Hitung persamaan regresi
-        slope, intercept, r = calculate_regression(x_data, y_data)
+    slope, intercept, r = calculate_regression(x_data, y_data)
 
-        # Tampilkan hasil persamaan regresi
-        st.header("Persamaan Regresi", divider="violet")
-        st.write(f'Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}')
-        st.write(f'Nilai Regresi: {r:.4f}')
-        st.write(f'Slope (b): {slope:.4f}')
-        st.write(f'Intercept (a): {intercept:.4f}')
+    st.header("Persamaan Regresi")
+    st.write(f'- Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}')
+    st.write(f'- Nilai Regresi: {r:.4f}')
+    st.write(f'- Slope (b): {slope:.4f}')
+    st.write(f'- Intercept (a): {intercept:.4f}')
 
-        # Simpan hasil perhitungan ke variabel session_state
-        st.session_state.results = {
-            'x_data': x_data,
-            'y_data': y_data,
-            'slope': slope,
-            'intercept': intercept,
-            'r': r
-        }
+def calculate_regression(x, y):
+    n = len(x)
+    x_sum = sum(x)
+    y_sum = sum(y)
+    xy_sum = sum(x_val * y_val for x_val, y_val in zip(x, y))
+    x_squared_sum = sum(x_val ** 2 for x_val in x)
+    y_squared_sum = sum(y_val ** 2 for y_val in y)
+
+    r_numerator = n * xy_sum - x_sum * y_sum
+    r_denominator = ((n * x_squared_sum - x_sum ** 2) * (n * y_squared_sum - y_sum ** 2)) ** 0.5
+    if r_denominator != 0:
+        r = r_numerator / r_denominator
+    else:
+        r = 0
+
+    if (n * x_squared_sum - x_sum ** 2) != 0:  
+        slope = r_numerator / (n * x_squared_sum - x_sum ** 2)
+    else:
+        slope = 0
+    intercept = (y_sum - slope * x_sum) / n
+
+    return slope, intercept, r
 
 def about_us_section():
-    st.header("Kalkulator Hubungan Kerapatan dan Kepekatan Larutan Garam 🧪⚗", divider="rainbow")
+    st.header("Tentang Kami")
     st.write("""
     Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
     dengan judul hubungan kerapatan dan kepekatan larutan garam. Dengan ini diharapkan dapat memudahkan untuk menghitung kerapatan 
