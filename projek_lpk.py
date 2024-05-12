@@ -28,14 +28,13 @@ def calculate_density_section():
             color: #ffffff; /* Warna putih */
         }
         .stMarkdown h1 {
-            color: #fffafa; /* Warna cream */
+            color: #fffafa !important; /* Warna cream */
         }
         .stMarkdown {
             background-color: rgba(0, 0, 0, 0.5);
             padding: 1rem;
             border-radius: 0.5rem;
             font-family: 'Bookman Old Style', sans-serif;
-            color: #fffafa; /* Warna cream */
         }
         .stButton>button {
             background-color: #007bff;
