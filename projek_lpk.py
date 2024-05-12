@@ -35,18 +35,18 @@ def calculate_density_section():
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=0.01)
 
     # Input data konsentrasi, volume, dan bobot
-    st.subheader("Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):")
-    
-    data_input = []
-    for i in range(num_data):
-        st.write(f"*Data {i+1}:*")
-        konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
-        bobot_filled = st.number_input(f'Bobot LTI (gram) {i+1}:', format="%.4f")
-        bobot_empty = st.number_input(f'Bobot LTK (gram) {i+1}:', format="%.4f")
-        data_input.append([konsentrasi, bobot_filled, bobot_empty])
+    st.subheader("Masukkan Data Konsentrasi, Bobot LTI (Labu Takar Isi), dan LTK (Labu Takar Kosong) dalam Tabel:")
+
+    # Buat dataframe kosong dengan kolom yang sesuai
+    df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'], index=range(num_data))
+
+    # Tampilkan tabel input
+    df_input = st.table(df_input)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
+        # Ambil data dari tabel input
+        data_input = df_input.data
         calculate_results(data_input, volume)
 
 # Fungsi untuk menghitung hasil
@@ -54,7 +54,7 @@ def calculate_results(data_input, volume):
     st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
 
     results_data = []
-    for i, data in enumerate(data_input):
+    for i, data in enumerate(data_input.values):
         weight = data[1] - data[2]
         density = calculate_density(weight, volume)
         if density is not None:
