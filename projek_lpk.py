@@ -1,8 +1,9 @@
-import matplotlib
-matplotlib.use('Agg')  # Menggunakan backend non-interaktif 'Agg'
-import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+
+# Set backend Matplotlib
+plt.switch_backend('agg')
 
 # Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
