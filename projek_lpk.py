@@ -33,9 +33,7 @@ def calculate_density_section():
     """)
 
     # Input jumlah data konsentrasi
-    num_data = 1
-    if 'data_input' in st.session_state:
-        num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=len(st.session_state.data_input.index))
+    num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=1)  # Ubah value menjadi 1
     
     # Input volume larutan
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=0.01)
