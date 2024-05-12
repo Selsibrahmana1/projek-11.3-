@@ -8,6 +8,7 @@ def calculate_density(weight, volume):
     else:
         return None
 
+# Fungsi utama
 def main():
     st.sidebar.title('Menu')
 
@@ -20,6 +21,7 @@ def main():
     elif selected_menu == 'Tentang Kami':
         about_us_section()
 
+# Bagian untuk menghitung kerapatan dan kepekatan larutan garam
 def calculate_density_section():
     if 'data_input' not in st.session_state:
         st.session_state.data_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
@@ -43,9 +45,9 @@ def calculate_density_section():
     
     for i in range(num_data):
         st.write(f"**Data {i+1}:**")
-        konsentrasi = st.number_input('Konsentrasi (g/mL):', format="%.2f")  
-        bobot_filled = st.number_input('Bobot Labu Takar Isi (gram):', format="%.4f")
-        bobot_empty = st.number_input('Bobot Labu Takar Kosong (gram):', format="%.4f")
+        konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
+        bobot_filled = st.number_input(f'Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
+        bobot_empty = st.number_input(f'Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
         st.write("---")
         st.session_state.data_input.loc[i] = [konsentrasi, bobot_filled, bobot_empty]
 
@@ -53,6 +55,7 @@ def calculate_density_section():
     if st.button('Hitung'):
         calculate_results()
 
+# Fungsi untuk menghitung hasil
 def calculate_results():
     data_input = st.session_state.data_input
     x_data = []  # Konsentrasi
@@ -77,6 +80,7 @@ def calculate_results():
     st.write(f'- Slope (b): {slope:.4f}')
     st.write(f'- Intercept (a): {intercept:.4f}')
 
+# Fungsi untuk menghitung regresi
 def calculate_regression(x, y):
     n = len(x)
     x_sum = sum(x)
@@ -100,6 +104,7 @@ def calculate_regression(x, y):
 
     return slope, intercept, r
 
+# Bagian "Tentang Kami"
 def about_us_section():
     st.header("Tentang Kami")
     st.write("""
