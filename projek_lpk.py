@@ -98,7 +98,7 @@ def calculate_results(data_input, volume):
     slope, intercept, r = calculate_regression(x_data, y_data)
 
     st.markdown(f"<h1 style='color: #F5F5DC'>Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='color: #F5F5DC'>Nilai Regresi: {r:.4f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='color: #F5F5DC'>Nilai korelasi: {r:.4f}</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='color: #F5F5DC'>Slope (b): {slope:.4f}</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='color: #F5F5DC'>Intercept (a): {intercept:.4f}</h1>", unsafe_allow_html=True)
 
