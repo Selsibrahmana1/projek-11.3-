@@ -59,9 +59,10 @@ def calculate_results(data_input, volume):
         if density is not None:
             results_data.append([data['Konsentrasi (g/mL)'], density])
 
-    # Tampilkan tabel hasil
-    df_results = pd.DataFrame(results_data, columns=['Konsentrasi (g/mL)', 'Kerapatan (g/mL)'])
-    st.table(df_results)  # Perbaikan disini
+    # Tampilkan hasil perhitungan
+    st.write("Konsentrasi (g/mL) | Kerapatan (g/mL)")
+    for result in results_data:
+        st.write(f"{result[0]} | {result[1]}")
 
 # Bagian "Tentang Kami"
 def about_us_section():
