@@ -1,6 +1,8 @@
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 # Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
@@ -11,6 +13,36 @@ def calculate_density(weight, volume):
 
 # Fungsi utama
 def main():
+    st.markdown(
+        """
+        <style>
+            .reportview-container {
+                background: linear-gradient(to right, #4ca1af, #c4e0e5); /* Ubah warna background */
+                color: #ffffff; /* Ubah warna teks */
+            }
+            .sidebar .sidebar-content {
+                background: linear-gradient(to right, #4ca1af, #c4e0e5); /* Ubah warna sidebar */
+                color: #ffffff; /* Ubah warna teks sidebar */
+            }
+            .Widget>label {
+                color: #ffffff; /* Ubah warna teks widget */
+            }
+            .stButton>button {
+                background-color: #0d3c55; /* Ubah warna tombol */
+            }
+            .stButton>button:hover {
+                background-color: #186f8f; /* Ubah warna tombol saat hover */
+            }
+            .pink-background {
+                background-color: #ffcccc; /* Warna latar belakang pink */
+                padding: 10px; /* Tambahkan padding */
+                border-radius: 5px; /* Tambahkan border radius */
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.sidebar.title('Menu')
 
     # Sidebar menu
