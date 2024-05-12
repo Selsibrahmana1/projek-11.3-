@@ -25,7 +25,10 @@ def calculate_density_section():
         .stApp {
             background-image: url("https://images8.alphacoders.com/104/thumb-1920-1048951.jpg");
             background-size: cover;
-            color: #biru;
+            color: #1e90ff; /* Warna biru gelap */
+        }
+        .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+            color: #1e90ff !important; /* Warna biru gelap */
         }
         .stMarkdown {
             background-color: rgba(0, 0, 0, 0.5);
@@ -37,7 +40,7 @@ def calculate_density_section():
             color: #ffffff;
         }
         .stTextInput>div>div>input {
-            background-color: #biru;
+            background-color: #1e90ff; /* Warna biru gelap */
             color: #333333;
         }
         </style>
