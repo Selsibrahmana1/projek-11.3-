@@ -35,7 +35,7 @@ def calculate_density_section():
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=0.01)
 
     # Input data konsentrasi, volume, dan bobot
-    st.subheader("Masukkan Data Konsentrasi dan Bobot LTI dan LTK:")
+    st.subheader("Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):")
     
     data_input = []
     for i in range(num_data):
