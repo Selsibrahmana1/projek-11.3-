@@ -1,14 +1,23 @@
 import streamlit as st
 import pandas as pd
 
-# Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
     if volume != 0:
         return weight / volume
     else:
         return None
 
-# Bagian untuk menghitung kerapatan dan kepekatan larutan garam
+def main():
+    st.sidebar.title('Menu')
+
+    menu_options = ['Kalkulator Kerapatan dan Kepekatan', 'Tentang Kami']
+    selected_menu = st.sidebar.radio('Navigasi', menu_options)
+
+    if selected_menu == 'Kalkulator Kerapatan dan Kepekatan':
+        calculate_density_section()
+    elif selected_menu == 'Tentang Kami':
+        about_us_section()
+
 def calculate_density_section():
     st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam")
     st.write("""
@@ -16,16 +25,12 @@ def calculate_density_section():
     Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot LTI dan LTK untuk menghitung kerapatan larutan.
     """)
 
-    # Input jumlah data konsentrasi
-    num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=1)  # Ubah value menjadi 1
+    num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=1)  
     
-    # Input volume larutan
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=0.01)
 
-    # Buat DataFrame kosong untuk menyimpan data masukan
     df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'])
 
-    # Tampilkan tabel untuk memasukkan data konsentrasi, bobot labu takar isi, dan bobot labu takar kosong
     st.subheader("Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):")
     for i in range(num_data):
         st.write(f"Data {i+1}:")
@@ -33,22 +38,14 @@ def calculate_density_section():
         bobot_filled = st.number_input(f'Bobot LTI (gram) {i+1}:', format="%.4f")
         bobot_empty = st.number_input(f'Bobot LTK (gram) {i+1}:', format="%.4f")
 
-        # Periksa nilai yang dimasukkan pengguna
-        print(f"Data {i+1}: Konsentrasi={konsentrasi}, Bobot LTI={bobot_filled}, Bobot LTK={bobot_empty}")
-
-        # Tambahkan data ke DataFrame
         df_input.loc[i] = {'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}
 
-    # Tampilkan data konsentrasi sebelum dihitung
     st.subheader("Data Konsentrasi Sebelum Dihitung:")
     st.table(df_input)
 
-    # Tombol untuk menghitung hasil
     if st.button('Hitung'):
-        # Jika tombol 'Hitung' ditekan, lakukan perhitungan
         calculate_results(df_input, volume)
 
-# Fungsi untuk menghitung hasil
 def calculate_results(data_input, volume):
     st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
 
@@ -59,12 +56,44 @@ def calculate_results(data_input, volume):
         if density is not None:
             results_data.append([data['Konsentrasi (g/mL)'], density])
 
-    # Tampilkan hasil perhitungan
     st.write("Konsentrasi (g/mL) | Kerapatan (g/mL)")
     for result in results_data:
         st.write(f"{result[0]} | {result[1]}")
 
-# Bagian "Tentang Kami"
+    # Kalkulasi regresi
+    x_data = [data[0] for data in results_data]
+    y_data = [data[1] for data in results_data]
+
+    slope, intercept, r = calculate_regression(x_data, y_data)
+
+    st.write(f'Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}')
+    st.write(f'Nilai Regresi: {r:.4f}')
+    st.write(f'Slope (b): {slope:.4f}')
+    st.write(f'Intercept (a): {intercept:.4f}')
+
+def calculate_regression(x, y):
+    n = len(x)
+    x_sum = sum(x)
+    y_sum = sum(y)
+    xy_sum = sum(x_val * y_val for x_val, y_val in zip(x, y))
+    x_squared_sum = sum(x_val ** 2 for x_val in x)
+    y_squared_sum = sum(y_val ** 2 for y_val in y)
+
+    r_numerator = n * xy_sum - x_sum * y_sum
+    r_denominator = ((n * x_squared_sum - x_sum ** 2) * (n * y_squared_sum - y_sum ** 2)) ** 0.5
+    if r_denominator != 0:
+        r = r_numerator / r_denominator
+    else:
+        r = 0
+
+    if (n * x_squared_sum - x_sum ** 2) != 0:
+        slope = r_numerator / (n * x_squared_sum - x_sum ** 2)
+    else:
+        slope = 0
+    intercept = (y_sum - slope * x_sum) / n
+
+    return slope, intercept, r
+
 def about_us_section():
     st.header("Tentang Kami")
     st.write("""
@@ -77,18 +106,6 @@ def about_us_section():
     4. Salima Keisha Arthidia        (2320552)
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
-
-def main():
-    st.sidebar.title('Menu')
-
-    # Sidebar menu
-    menu_options = ['Kalkulator Kerapatan dan Kepekatan', 'Tentang Kami']
-    selected_menu = st.sidebar.radio('Navigasi', menu_options)
-
-    if selected_menu == 'Kalkulator Kerapatan dan Kepekatan':
-        calculate_density_section()
-    elif selected_menu == 'Tentang Kami':
-        about_us_section()
 
 if __name__ == "__main__":
     main()
