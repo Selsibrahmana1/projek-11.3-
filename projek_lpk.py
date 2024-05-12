@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 # Fungsi untuk menghitung kerapatan
 def calculate_density(weight, volume):
@@ -21,13 +22,7 @@ def main():
 
 def calculate_density_section():
     if 'data_input' not in st.session_state:
-        st.session_state.data_input = {
-            'num_data': 1,
-            'volume': 0.01,
-            'konsentrasi': [],
-            'bobot_filled': [],
-            'bobot_empty': [],
-        }
+        st.session_state.data_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot Labu Takar Isi (gram)', 'Bobot Labu Takar Kosong (gram)'])
     if 'results' not in st.session_state:
         st.session_state.results = {}
 
@@ -38,12 +33,10 @@ def calculate_density_section():
     """)
 
     # Input jumlah data konsentrasi
-    num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=st.session_state.data_input['num_data'])
-    st.session_state.data_input['num_data'] = num_data
-
+    num_data = st.number_input('Masukkan jumlah data konsentrasi:', min_value=1, step=1, value=len(st.session_state.data_input))
+    
     # Input volume larutan
-    volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=st.session_state.data_input['volume'])
-    st.session_state.data_input['volume'] = volume
+    volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=0.01)
 
     # Input data konsentrasi, volume, dan bobot
     st.subheader("Masukkan Data Konsentrasi dan Bobot Labu Takar:")
@@ -54,9 +47,7 @@ def calculate_density_section():
         bobot_filled = st.number_input('Bobot Labu Takar Isi (gram):', format="%.4f")
         bobot_empty = st.number_input('Bobot Labu Takar Kosong (gram):', format="%.4f")
         st.write("---")
-        st.session_state.data_input['konsentrasi'].append(konsentrasi)
-        st.session_state.data_input['bobot_filled'].append(bobot_filled)
-        st.session_state.data_input['bobot_empty'].append(bobot_empty)
+        st.session_state.data_input.loc[i] = [konsentrasi, bobot_filled, bobot_empty]
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
@@ -67,11 +58,11 @@ def calculate_results():
     x_data = []  # Konsentrasi
     y_data = []  # Kerapatan
 
-    for konsentrasi, bobot_filled, bobot_empty in zip(data_input['konsentrasi'], data_input['bobot_filled'], data_input['bobot_empty']):
-        weight = bobot_filled - bobot_empty
-        density = calculate_density(weight, data_input['volume'])
+    for _, row in data_input.iterrows():
+        weight = row['Bobot Labu Takar Isi (gram)'] - row['Bobot Labu Takar Kosong (gram)']
+        density = calculate_density(weight, st.session_state.volume)
         if density is not None:
-            x_data.append(konsentrasi)
+            x_data.append(row['Konsentrasi (g/mL)'])
             y_data.append(density)
 
     st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
