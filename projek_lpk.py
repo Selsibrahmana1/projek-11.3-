@@ -25,8 +25,8 @@ def calculate_density_section():
         .stApp {
             background-image: url("https://th.bing.com/th/id/OIP.Phr7kl01sLf1jwhio7CrNQHaE8?rs=1&pid=ImgDetMain");
             background-size: cover;
-            color: #f5deb3; /* Warna krim */
-            font-family: 'Bookman Old Style', sans-serif;
+            color: #ffffff; /* Warna putih */
+            font-family: Algerian, sans-serif;
         }
         .stMarkdown {
             background-color: rgba(0, 0, 0, 0.5);
