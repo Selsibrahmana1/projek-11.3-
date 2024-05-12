@@ -23,7 +23,7 @@ def calculate_density_section():
         """
         <style>
         .stApp {
-            background-image: url("https://wallpapercave.com/wp/wp2613001.jpg");
+            background-image: url("https://th.bing.com/th/id/OIP.2UPNCUTZnhrudIyremxZAAHaEo?w=303&h=189&c=7&r=0&o=5&dpr=1.5&pid=1.7");
             background-size: cover;
             color: #ffffff; /* Warna putih */
         }
