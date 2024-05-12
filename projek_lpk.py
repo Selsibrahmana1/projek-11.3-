@@ -52,7 +52,7 @@ def calculate_results(data_input, volume):
 
     # Tampilkan tabel hasil
     df_results = pd.DataFrame(results_data, columns=['Konsentrasi (g/mL)', 'Kerapatan (g/mL)'])
-    st.dataframe(df_results)
+    st.table(df_results)  # Perbaikan disini
 
 # Bagian "Tentang Kami"
 def about_us_section():
