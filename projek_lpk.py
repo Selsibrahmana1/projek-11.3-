@@ -28,7 +28,7 @@ def calculate_density_section():
             color: #ffffff; /* Warna putih */
         }
         .stMarkdown h1 {
-            color: #A8A9AD !important; /* Warna silver */
+            color: #F5F5DC !important; /* Warna cream */
             padding-bottom: 10px; /* Spasi antara judul dan konten */
         }
         .stMarkdown {
