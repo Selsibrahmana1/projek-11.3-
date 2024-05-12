@@ -39,6 +39,10 @@ def calculate_density_section():
         # Tambahkan data ke DataFrame
         df_input.loc[i] = {'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}
 
+    # Tampilkan data konsentrasi sebelum dihitung
+    st.subheader("Data Konsentrasi Sebelum Dihitung:")
+    st.table(df_input)
+
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
         # Jika tombol 'Hitung' ditekan, lakukan perhitungan
