@@ -50,7 +50,7 @@ def calculate_density_section():
         unsafe_allow_html=True
     )
 
-    st.header("<h1 style='color: #F5F5DC'>Kalkulator Kerapatan dan Kepekatan Larutan Garam</h1>", anchor='center', unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #F5F5DC'>Kalkulator Kerapatan dan Kepekatan Larutan Garam</h1>", unsafe_allow_html=True)
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
     Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot LTI dan LTK untuk menghitung kerapatan larutan.
@@ -62,7 +62,7 @@ def calculate_density_section():
 
     df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'])
 
-    st.subheader("<h1 style='color: #F5F5DC'>Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):</h1>")
+    st.markdown("<h1 style='color: #F5F5DC'>Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):</h1>", unsafe_allow_html=True)
     for i in range(num_data):
         st.write(f"Data {i+1}:")
         konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
@@ -71,14 +71,14 @@ def calculate_density_section():
 
         df_input.loc[i] = {'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}
 
-    st.subheader("<h1 style='color: #F5F5DC'>Data Konsentrasi Sebelum Dihitung:</h1>")
+    st.markdown("<h1 style='color: #F5F5DC'>Data Konsentrasi Sebelum Dihitung:</h1>", unsafe_allow_html=True)
     st.table(df_input)
 
     if st.button('Hitung'):
         calculate_results(df_input, volume)
 
 def calculate_results(data_input, volume):
-    st.header("<h1 style='color: #F5F5DC'>Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi</h1>")
+    st.markdown("<h1 style='color: #F5F5DC'>Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi</h1>", unsafe_allow_html=True)
 
     results_data = []
     for i, data in data_input.iterrows():
@@ -87,9 +87,9 @@ def calculate_results(data_input, volume):
         if density is not None:
             results_data.append([data['Konsentrasi (g/mL)'], density])
 
-    st.write("<h1 style='color: #F5F5DC'>Konsentrasi (g/mL) | Kerapatan (g/mL)</h1>")
+    st.markdown("<h1 style='color: #F5F5DC'>Konsentrasi (g/mL) | Kerapatan (g/mL)</h1>", unsafe_allow_html=True)
     for result in results_data:
-        st.write(f"<h1 style='color: #F5F5DC'>{result[0]} | {result[1]}</h1>")
+        st.markdown(f"<h1 style='color: #F5F5DC'>{result[0]} | {result[1]}</h1>", unsafe_allow_html=True)
 
     # Kalkulasi regresi
     x_data = [data[0] for data in results_data]
@@ -97,10 +97,10 @@ def calculate_results(data_input, volume):
 
     slope, intercept, r = calculate_regression(x_data, y_data)
 
-    st.write(f"<h1 style='color: #F5F5DC'>Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}</h1>")
-    st.write(f"<h1 style='color: #F5F5DC'>Nilai Regresi: {r:.4f}</h1>")
-    st.write(f"<h1 style='color: #F5F5DC'>Slope (b): {slope:.4f}</h1>")
-    st.write(f"<h1 style='color: #F5F5DC'>Intercept (a): {intercept:.4f}</h1>")
+    st.markdown(f"<h1 style='color: #F5F5DC'>Persamaan Regresi: y = {slope:.4f}x + {intercept:.4f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='color: #F5F5DC'>Nilai Regresi: {r:.4f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='color: #F5F5DC'>Slope (b): {slope:.4f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='color: #F5F5DC'>Intercept (a): {intercept:.4f}</h1>", unsafe_allow_html=True)
 
 def calculate_regression(x, y):
     n = len(x)
@@ -126,7 +126,7 @@ def calculate_regression(x, y):
     return slope, intercept, r
 
 def about_us_section():
-    st.header("<h1 style='color: #F5F5DC'>Tentang Kami</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #F5F5DC'>Tentang Kami</h1>", unsafe_allow_html=True)
     st.write("""
     Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
     dengan judul hubungan kerapatan dan kepekatan larutan garam. Dengan ini diharapkan dapat memudahkan untuk menghitung kerapatan 
