@@ -126,6 +126,33 @@ def calculate_regression(x, y):
     return slope, intercept, r
 
 def about_us_section():
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-image: url("C:/Users/Selsi Brahmana/OneDrive/Documents/WhatsApp Image 2024-05-12 at 21.25.33_2b493583.jpg");
+            background-size: cover;
+            color: #ffffff; /* Warna putih */
+        }
+        .stMarkdown h1 {
+            color: #F5F5DC !important; /* Warna cream */
+            padding-bottom: 10px; /* Spasi antara judul dan konten */
+        }
+        .stMarkdown {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Bookman Old Style', sans-serif;
+        }
+        .stButton>button {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("<h1 style='color: #F5F5DC'>Tentang Kami</h1>", unsafe_allow_html=True)
     st.write("""
     Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
@@ -137,8 +164,6 @@ def about_us_section():
     4. Salima Keisha Arthidia        (2320552)
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
-
-    st.image("C:/Users/Selsi Brahmana/OneDrive/Documents/WhatsApp Image 2024-05-12 at 21.25.33_2b493583.jpg", use_column_width=True)
 
 if __name__ == "__main__":
     main()
