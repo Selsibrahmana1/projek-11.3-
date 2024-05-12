@@ -24,6 +24,12 @@ def main():
             .Widget>label {
                 color: #ffffff; /* Ubah warna teks widget */
             }
+            .stButton>button {
+                background-color: #0d3c55; /* Ubah warna tombol */
+            }
+            .stButton>button:hover {
+                background-color: #186f8f; /* Ubah warna tombol saat hover */
+            }
         </style>
         """,
         unsafe_allow_html=True
