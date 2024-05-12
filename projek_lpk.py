@@ -19,6 +19,28 @@ def main():
         about_us_section()
 
 def calculate_density_section():
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-color: #f0f0f0;
+        }
+        .stMarkdown {
+            color: #333333;
+        }
+        .stButton>button {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        .stTextInput>div>div>input {
+            background-color: #ffffff;
+            color: #333333;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
