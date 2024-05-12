@@ -42,7 +42,7 @@ def calculate_density_section():
             color: #ffffff;
         }
         .stTextInput>div>div>input {
-            background-color: #1e90ff; /* Warna biru gelap */
+            background-color: ##A8A9AD; /* Warna silver */
             color: #333333;
         }
         </style>
