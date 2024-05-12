@@ -26,12 +26,13 @@ def calculate_density_section():
             background-image: url("https://th.bing.com/th/id/OIP.Phr7kl01sLf1jwhio7CrNQHaE8?rs=1&pid=ImgDetMain");
             background-size: cover;
             color: #ffffff; /* Warna putih */
-            font-family: Algerian, sans-serif;
         }
         .stMarkdown {
             background-color: rgba(0, 0, 0, 0.5);
             padding: 1rem;
             border-radius: 0.5rem;
+            font-family: 'Bookman Old Style', sans-serif;
+            color: #fffafa; /* Warna cream */
         }
         .stButton>button {
             background-color: #007bff;
