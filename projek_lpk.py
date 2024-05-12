@@ -10,36 +10,6 @@ def calculate_density(weight, volume):
 
 # Fungsi utama
 def main():
-    st.markdown(
-        """
-        <style>
-            .reportview-container {
-                background: linear-gradient(to right, #4ca1af, #c4e0e5); /* Ubah warna background */
-                color: #ffffff; /* Ubah warna teks */
-            }
-            .sidebar .sidebar-content {
-                background: linear-gradient(to right, #4ca1af, #c4e0e5); /* Ubah warna sidebar */
-                color: #ffffff; /* Ubah warna teks sidebar */
-            }
-            .Widget>label {
-                color: #ffffff; /* Ubah warna teks widget */
-            }
-            .stButton>button {
-                background-color: #0d3c55; /* Ubah warna tombol */
-            }
-            .stButton>button:hover {
-                background-color: #186f8f; /* Ubah warna tombol saat hover */
-            }
-            .pink-background {
-                background-color: #ffcccc; /* Warna latar belakang pink */
-                padding: 10px; /* Tambahkan padding */
-                border-radius: 5px; /* Tambahkan border radius */
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
     st.sidebar.title('Menu')
 
     # Sidebar menu
@@ -58,8 +28,7 @@ def calculate_density_section():
     if 'results' not in st.session_state:
         st.session_state.results = {}
 
-    st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam", 
-                anchor="masukkan-data")  # Menambahkan anchor untuk navigasi
+    st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
     Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot labu takar untuk menghitung kerapatan larutan.
@@ -75,29 +44,26 @@ def calculate_density_section():
     st.subheader("Masukkan Data Konsentrasi dan Bobot Labu Takar:")
     
     for i in range(num_data):
-        st.write(f"**Data {i+1}:**")
-        with st.container():  # Tambahkan kontainer untuk warna pink
-            st.write(f"**Data {i+1}:**", 
-                    anchor=f"data-{i+1}")  # Menambahkan anchor untuk navigasi
-            konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f", key=f'konsentrasi_{i}')  
-            bobot_filled = st.number_input(f'Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f", key=f'bobot_filled_{i}')
-            bobot_empty = st.number_input(f'Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f", key=f'bobot_empty_{i}')
+        st.write(f"*Data {i+1}:*")
+        konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
+        bobot_filled = st.number_input(f'Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f")
+        bobot_empty = st.number_input(f'Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f")
         st.write("---")
         st.session_state.data_input.loc[i] = [konsentrasi, bobot_filled, bobot_empty]
 
     # Tombol untuk menghitung hasil
-    if st.button('Hitung', key="hitung"):
-        calculate_results(volume)
+    if st.button('Hitung'):
+        calculate_results()
 
 # Fungsi untuk menghitung hasil
-def calculate_results(volume):
+def calculate_results():
     data_input = st.session_state.data_input
     x_data = []  # Konsentrasi
     y_data = []  # Kerapatan
 
     for _, row in data_input.iterrows():
         weight = row['Bobot Labu Takar Isi (gram)'] - row['Bobot Labu Takar Kosong (gram)']
-        density = calculate_density(weight, volume)
+        density = calculate_density(weight, st.session_state.volume)
         if density is not None:
             x_data.append(row['Konsentrasi (g/mL)'])
             y_data.append(density)
@@ -145,11 +111,11 @@ def about_us_section():
     Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
     dengan judul hubungan kerapatan dan kepekatan larutan garam. Dengan ini diharapkan dapat memudahkan untuk menghitung kerapatan 
     dan kepekatan garam dalam larutan secara cepat dan tepat. Web Aplikasi disusun oleh :
-    1. Dinda Ariyantika (2302520)
-    2. Ibnu Mustofa Giam (2320529)
-    3. Putri Nabila Aji Kusuma (2320546)
-    4. Salima Keisha Arthidia (2320552)
-    5. Selsi Mei Doanna br Brahmana (2320554)
+    1. Dinda Ariyantika              (2302520)
+    2. Ibnu Mustofa Giam             (2320529)
+    3. Putri Nabila Aji Kusuma       (2320546)
+    4. Salima Keisha Arthidia        (2320552)
+    5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
 
 if __name__ == "__main__":
