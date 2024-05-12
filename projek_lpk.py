@@ -23,7 +23,7 @@ def calculate_density_section():
         """
         <style>
         .stApp {
-            background-image: url("https://th.bing.com/th/id/OIP.Phr7kl01sLf1jwhio7CrNQHaE8?rs=1&pid=ImgDetMain");
+            background-image: url("https://wallpapercave.com/wp/wp2613001.jpg");
             background-size: cover;
             color: #ffffff; /* Warna putih */
         }
@@ -127,42 +127,16 @@ def calculate_regression(x, y):
 
 def about_us_section():
     st.header("Tentang Kami")
-    st.markdown(
-        """
-        <style>
-        .about-us-background {
-            background-image: url("https://example.com/background_image.jpg");
-            background-size: cover;
-            background-position: center;
-            color: #ffffff;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            font-family: 'Bookman Old Style', sans-serif;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        """
-        <div class="about-us-background">
-            <h1>Tentang Kami</h1>
-            <p>Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
-            dengan judul hubungan kerapatan dan kepekatan larutan garam. Dengan ini diharapkan dapat memudahkan untuk menghitung kerapatan 
-            dan kepekatan garam dalam larutan secara cepat dan tepat.</p>
-            <p>Web Aplikasi disusun oleh :</p>
-            <ul>
-                <li>Dinda Ariyantika (2302520)</li>
-                <li>Ibnu Mustofa Giam (2320529)</li>
-                <li>Putri Nabila Aji Kusuma (2320546)</li>
-                <li>Salima Keisha Arthidia (2320552)</li>
-                <li>Selsi Mei Doanna br Brahmana (2320554)</"C:\Users\Selsi Brahmana\OneDrive\Pictures\Rol Kamera\WIN_20240325_22_46_38_Pro.jpg">
-            </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.write("""
+    Ini adalah kalkulator sederhana yang dikembangkan oleh Tim LPK. Terinspirasi dari praktik analisis fisika pangan mengenai praktikum 
+    dengan judul hubungan kerapatan dan kepekatan larutan garam. Dengan ini diharapkan dapat memudahkan untuk menghitung kerapatan 
+    dan kepekatan garam dalam larutan secara cepat dan tepat. Web Aplikasi disusun oleh :
+    1. Dinda Ariyantika              (2302520)
+    2. Ibnu Mustofa Giam             (2320529)
+    3. Putri Nabila Aji Kusuma       (2320546)
+    4. Salima Keisha Arthidia        (2320552)
+    5. Selsi Mei Doanna br Brahmana  (2320554)
+    """)
 
 if __name__ == "__main__":
     main()
