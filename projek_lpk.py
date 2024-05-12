@@ -8,18 +8,6 @@ def calculate_density(weight, volume):
     else:
         return None
 
-def main():
-    st.sidebar.title('Menu')
-
-    # Sidebar menu
-    menu_options = ['Kalkulator Kerapatan dan Kepekatan', 'Tentang Kami']
-    selected_menu = st.sidebar.radio('Navigasi', menu_options)
-
-    if selected_menu == 'Kalkulator Kerapatan dan Kepekatan':
-        calculate_density_section()
-    elif selected_menu == 'Tentang Kami':
-        about_us_section()
-
 # Bagian untuk menghitung kerapatan dan kepekatan larutan garam
 def calculate_density_section():
     st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam")
@@ -44,7 +32,7 @@ def calculate_density_section():
         konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
         bobot_filled = st.number_input(f'Bobot LTI (gram) {i+1}:', format="%.4f")
         bobot_empty = st.number_input(f'Bobot LTK (gram) {i+1}:', format="%.4f")
-        df_input = df_input.append({'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}, ignore_index=True)
+        df_input.loc[len(df_input)] = [konsentrasi, bobot_filled, bobot_empty]  # Perbaikan disini
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
@@ -79,6 +67,18 @@ def about_us_section():
     4. Salima Keisha Arthidia        (2320552)
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
+
+def main():
+    st.sidebar.title('Menu')
+
+    # Sidebar menu
+    menu_options = ['Kalkulator Kerapatan dan Kepekatan', 'Tentang Kami']
+    selected_menu = st.sidebar.radio('Navigasi', menu_options)
+
+    if selected_menu == 'Kalkulator Kerapatan dan Kepekatan':
+        calculate_density_section()
+    elif selected_menu == 'Tentang Kami':
+        about_us_section()
 
 if __name__ == "__main__":
     main()
