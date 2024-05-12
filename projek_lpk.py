@@ -34,19 +34,21 @@ def calculate_density_section():
     # Input volume larutan
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=0.01)
 
-    # Buat DataFrame kosong dengan kolom yang sesuai
-    df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'], index=range(num_data))
+    # Buat DataFrame kosong untuk menyimpan data masukan
+    df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'])
 
-    # Tampilkan tabel input
+    # Input data konsentrasi, volume, dan bobot
+    st.subheader("Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):")
     for i in range(num_data):
-        konsentrasi_input = st.text_input(f'Konsentrasi (g/mL) {i+1}', value=df_input.iloc[i]['Konsentrasi (g/mL)'], key=f'konsentrasi_{i}')
-        lti_input = st.text_input(f'Bobot LTI (gram) {i+1}', value=df_input.iloc[i]['Bobot LTI (gram)'], key=f'lti_{i}')
-        ltk_input = st.text_input(f'Bobot LTK (gram) {i+1}', value=df_input.iloc[i]['Bobot LTK (gram)'], key=f'ltk_{i}')
-        df_input.iloc[i] = [konsentrasi_input, lti_input, ltk_input]
+        st.write(f"Data {i+1}:")
+        konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
+        bobot_filled = st.number_input(f'Bobot LTI (gram) {i+1}:', format="%.4f")
+        bobot_empty = st.number_input(f'Bobot LTK (gram) {i+1}:', format="%.4f")
+        df_input = df_input.append({'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}, ignore_index=True)
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
-        # Ambil data dari tabel input
+        # Jika tombol 'Hitung' ditekan, lakukan perhitungan
         calculate_results(df_input, volume)
 
 # Fungsi untuk menghitung hasil
@@ -55,21 +57,14 @@ def calculate_results(data_input, volume):
 
     results_data = []
     for i, data in data_input.iterrows():
-        try:
-            konsentrasi = float(data['Konsentrasi (g/mL)'])
-            lti = float(data['Bobot LTI (gram)'])
-            ltk = float(data['Bobot LTK (gram)'])
-            weight = lti - ltk
-            density = calculate_density(weight, volume)
-            if density is not None:
-                results_data.append([konsentrasi, density])
-        except ValueError:
-            st.warning(f"Data pada baris {i+1} tidak valid. Pastikan semua nilai telah diisi dengan angka.")
+        weight = data['Bobot LTI (gram)'] - data['Bobot LTK (gram)']
+        density = calculate_density(weight, volume)
+        if density is not None:
+            results_data.append([data['Konsentrasi (g/mL)'], density])
 
     # Tampilkan tabel hasil
-    if results_data:
-        df_results = pd.DataFrame(results_data, columns=['Konsentrasi (g/mL)', 'Kerapatan (g/mL)'])
-        st.dataframe(df_results)
+    df_results = pd.DataFrame(results_data, columns=['Konsentrasi (g/mL)', 'Kerapatan (g/mL)'])
+    st.dataframe(df_results)
 
 # Bagian "Tentang Kami"
 def about_us_section():
