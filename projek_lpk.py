@@ -30,6 +30,11 @@ def main():
             .stButton>button:hover {
                 background-color: #186f8f; /* Ubah warna tombol saat hover */
             }
+            .pink-background {
+                background-color: #ffcccc; /* Warna latar belakang pink */
+                padding: 10px; /* Tambahkan padding */
+                border-radius: 5px; /* Tambahkan border radius */
+            }
         </style>
         """,
         unsafe_allow_html=True
@@ -53,7 +58,8 @@ def calculate_density_section():
     if 'results' not in st.session_state:
         st.session_state.results = {}
 
-    st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam")
+    st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam", 
+                anchor="masukkan-data")  # Menambahkan anchor untuk navigasi
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
     Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot labu takar untuk menghitung kerapatan larutan.
@@ -70,14 +76,17 @@ def calculate_density_section():
     
     for i in range(num_data):
         st.write(f"**Data {i+1}:**")
-        konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f", key=f'konsentrasi_{i}')  
-        bobot_filled = st.number_input(f'Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f", key=f'bobot_filled_{i}')
-        bobot_empty = st.number_input(f'Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f", key=f'bobot_empty_{i}')
+        with st.container():  # Tambahkan kontainer untuk warna pink
+            st.write(f"**Data {i+1}:**", 
+                    anchor=f"data-{i+1}")  # Menambahkan anchor untuk navigasi
+            konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f", key=f'konsentrasi_{i}')  
+            bobot_filled = st.number_input(f'Bobot Labu Takar Isi (gram) {i+1}:', format="%.4f", key=f'bobot_filled_{i}')
+            bobot_empty = st.number_input(f'Bobot Labu Takar Kosong (gram) {i+1}:', format="%.4f", key=f'bobot_empty_{i}')
         st.write("---")
         st.session_state.data_input.loc[i] = [konsentrasi, bobot_filled, bobot_empty]
 
     # Tombol untuk menghitung hasil
-    if st.button('Hitung'):
+    if st.button('Hitung', key="hitung"):
         calculate_results(volume)
 
 # Fungsi untuk menghitung hasil
