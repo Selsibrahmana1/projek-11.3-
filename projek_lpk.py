@@ -23,9 +23,9 @@ def calculate_density_section():
         """
         <style>
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1527713145751-627b579eae8a");
+            background-image: url("https://images8.alphacoders.com/104/thumb-1920-1048951.jpg");
             background-size: cover;
-            color: #ffffff;
+            color: #biru;
         }
         .stMarkdown {
             background-color: rgba(0, 0, 0, 0.5);
@@ -37,7 +37,7 @@ def calculate_density_section():
             color: #ffffff;
         }
         .stTextInput>div>div>input {
-            background-color: #ffffff;
+            background-color: #biru;
             color: #333333;
         }
         </style>
