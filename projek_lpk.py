@@ -138,5 +138,7 @@ def about_us_section():
     5. Selsi Mei Doanna br Brahmana  (2320554)
     """)
 
+    st.image("C:/Users/Selsi Brahmana/OneDrive/Documents/WhatsApp Image 2024-05-12 at 21.25.33_2b493583.jpg", use_column_width=True)
+
 if __name__ == "__main__":
     main()
