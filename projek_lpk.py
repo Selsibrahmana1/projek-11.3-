@@ -140,10 +140,10 @@ def about_us_section():
 
     st.write("<h2 style='color: #F5F5DC'>Unggah Foto Tim LPK:</h2>")
     # Tampilkan file uploader untuk unggah foto
-    uploaded_image = st."C:\Users\Selsi Brahmana\OneDrive\Documents\WhatsApp Image 2024-05-12 at 21.25.33_2b493583.jpg"("unggah foto", type=["jpg", "png", "jpeg"])
+    uploaded_image = st.file_uploader("Unggah foto", type=["jpg", "png", "jpeg"])
     if uploaded_image is not None:
         # Tampilkan foto yang diunggah
-        st."C:\Users\Selsi Brahmana\OneDrive\Documents\WhatsApp Image 2024-05-12 at 21.25.33_2b493583.jpg"(uploaded_image, caption='Foto Tim LPK', use_column_width=True)
+        st.image(uploaded_image, caption='Foto Tim LPK', use_column_width=True)
 
 if __name__ == "__main__":
     main()
