@@ -38,28 +38,38 @@ def calculate_density_section():
     df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'], index=range(num_data))
 
     # Tampilkan tabel input
-    df_input = st.table(df_input)
+    for i in range(num_data):
+        konsentrasi_input = st.text_input(f'Konsentrasi (g/mL) {i+1}', value=df_input.iloc[i]['Konsentrasi (g/mL)'], key=f'konsentrasi_{i}')
+        lti_input = st.text_input(f'Bobot LTI (gram) {i+1}', value=df_input.iloc[i]['Bobot LTI (gram)'], key=f'lti_{i}')
+        ltk_input = st.text_input(f'Bobot LTK (gram) {i+1}', value=df_input.iloc[i]['Bobot LTK (gram)'], key=f'ltk_{i}')
+        df_input.iloc[i] = [konsentrasi_input, lti_input, ltk_input]
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
         # Ambil data dari tabel input
-        data_input = df_input.data
-        calculate_results(data_input, volume)
+        calculate_results(df_input, volume)
 
 # Fungsi untuk menghitung hasil
 def calculate_results(data_input, volume):
     st.header("Hasil Perhitungan Kerapatan untuk Setiap Konsentrasi")
 
     results_data = []
-    for i, data in enumerate(data_input.values):
-        weight = data[1] - data[2]
-        density = calculate_density(weight, volume)
-        if density is not None:
-            results_data.append([data[0], density])
+    for i, data in data_input.iterrows():
+        try:
+            konsentrasi = float(data['Konsentrasi (g/mL)'])
+            lti = float(data['Bobot LTI (gram)'])
+            ltk = float(data['Bobot LTK (gram)'])
+            weight = lti - ltk
+            density = calculate_density(weight, volume)
+            if density is not None:
+                results_data.append([konsentrasi, density])
+        except ValueError:
+            st.warning(f"Data pada baris {i+1} tidak valid. Pastikan semua nilai telah diisi dengan angka.")
 
     # Tampilkan tabel hasil
-    df_results = pd.DataFrame(results_data, columns=['Konsentrasi (g/mL)', 'Kerapatan (g/mL)'])
-    st.dataframe(df_results)
+    if results_data:
+        df_results = pd.DataFrame(results_data, columns=['Konsentrasi (g/mL)', 'Kerapatan (g/mL)'])
+        st.dataframe(df_results)
 
 # Bagian "Tentang Kami"
 def about_us_section():
