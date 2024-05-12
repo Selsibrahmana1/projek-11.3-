@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg')  # Menggunakan backend non-interaktif 'Agg'
 import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
