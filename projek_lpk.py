@@ -25,10 +25,8 @@ def calculate_density_section():
         .stApp {
             background-image: url("https://th.bing.com/th/id/OIP.Phr7kl01sLf1jwhio7CrNQHaE8?rs=1&pid=ImgDetMain");
             background-size: cover;
-            color: #1e90ff; /* Warna biru gelap */
-        }
-        .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
-            color: white !important; /* Warna putih */
+            color: #f5deb3; /* Warna krim */
+            font-family: 'Bookman Old Style', sans-serif;
         }
         .stMarkdown {
             background-color: rgba(0, 0, 0, 0.5);
@@ -48,7 +46,7 @@ def calculate_density_section():
         unsafe_allow_html=True
     )
 
-    st.header("Kalkulator kerapatan dan kepekatan larutan garam ")
+    st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
     Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot LTI dan LTK untuk menghitung kerapatan larutan.
