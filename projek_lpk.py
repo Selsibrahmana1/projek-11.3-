@@ -23,10 +23,14 @@ def calculate_density_section():
         """
         <style>
         .stApp {
-            background-color: #f0f0f0;
+            background-image: url("https://images.unsplash.com/photo-1527713145751-627b579eae8a");
+            background-size: cover;
+            color: #ffffff;
         }
         .stMarkdown {
-            color: #333333;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 0.5rem;
         }
         .stButton>button {
             background-color: #007bff;
