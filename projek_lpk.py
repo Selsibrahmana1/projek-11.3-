@@ -25,17 +25,14 @@ def calculate_density_section():
     # Buat DataFrame kosong untuk menyimpan data masukan
     df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'])
 
-    # Tampilkan tabel untuk memasukkan data konsentrasi, bobot labu takar isi, dan bobot labu takar kosong
-    st.subheader("Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):")
-    st.write(df_input)  # Tambahkan tabel kosong di sini untuk memasukkan data
-
     # Input data konsentrasi, volume, dan bobot
+    st.subheader("Masukkan Data Konsentrasi dan Bobot LTI (Labu Takar Isi) dan LTK (Labu Takar Kosong):")
     for i in range(num_data):
         st.write(f"Data {i+1}:")
         konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
         bobot_filled = st.number_input(f'Bobot LTI (gram) {i+1}:', format="%.4f")
         bobot_empty = st.number_input(f'Bobot LTK (gram) {i+1}:', format="%.4f")
-        df_input = df_input.append({'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}, ignore_index=True)
+        df_input.loc[i] = [konsentrasi, bobot_filled, bobot_empty]  # Perbaikan disini
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
