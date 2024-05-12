@@ -48,7 +48,7 @@ def calculate_density_section():
         unsafe_allow_html=True
     )
 
-    st.header("Kalkulator Kerapatan dan Kepekatan Larutan Garam")
+    st.header("Kalkulator kerapatan dan kepekatan larutan garam ")
     st.write("""
     Ini adalah kalkulator sederhana untuk menghitung kerapatan dan kepekatan garam dalam larutan. 
     Anda dapat memasukkan data konsentrasi, volume, dan rata-rata bobot LTI dan LTK untuk menghitung kerapatan larutan.
