@@ -28,7 +28,7 @@ def calculate_density_section():
             color: #1e90ff; /* Warna biru gelap */
         }
         .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
-            color: #1e90ff !important; /* Warna biru gelap */
+            color: white !important; /* Warna putih */
         }
         .stMarkdown {
             background-color: rgba(0, 0, 0, 0.5);
