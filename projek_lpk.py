@@ -10,6 +10,17 @@ def calculate_density(weight, volume):
 
 # Fungsi utama
 def main():
+    st.markdown(
+        """
+        <style>
+            .reportview-container {
+                background: linear-gradient(to right, #4ca1af, #c4e0e5); /* Ubah warna background */
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.sidebar.title('Menu')
 
     # Sidebar menu
