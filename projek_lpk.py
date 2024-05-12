@@ -32,7 +32,12 @@ def calculate_density_section():
         konsentrasi = st.number_input(f'Konsentrasi (g/mL) {i+1}:', format="%.2f")  
         bobot_filled = st.number_input(f'Bobot LTI (gram) {i+1}:', format="%.4f")
         bobot_empty = st.number_input(f'Bobot LTK (gram) {i+1}:', format="%.4f")
-        df_input = df_input.append({'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}, ignore_index=True)
+
+        # Periksa nilai yang dimasukkan pengguna
+        print(f"Data {i+1}: Konsentrasi={konsentrasi}, Bobot LTI={bobot_filled}, Bobot LTK={bobot_empty}")
+
+        # Tambahkan data ke DataFrame
+        df_input.loc[i] = {'Konsentrasi (g/mL)': konsentrasi, 'Bobot LTI (gram)': bobot_filled, 'Bobot LTK (gram)': bobot_empty}
 
     # Tombol untuk menghitung hasil
     if st.button('Hitung'):
