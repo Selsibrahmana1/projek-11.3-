@@ -34,10 +34,7 @@ def calculate_density_section():
     # Input volume larutan
     volume = st.number_input('Masukkan volume larutan (mL):', min_value=0.01, step=0.01, value=0.01)
 
-    # Input data konsentrasi, volume, dan bobot
-    st.subheader("Masukkan Data Konsentrasi, Bobot LTI (Labu Takar Isi), dan LTK (Labu Takar Kosong) dalam Tabel:")
-
-    # Buat dataframe kosong dengan kolom yang sesuai
+    # Buat DataFrame kosong dengan kolom yang sesuai
     df_input = pd.DataFrame(columns=['Konsentrasi (g/mL)', 'Bobot LTI (gram)', 'Bobot LTK (gram)'], index=range(num_data))
 
     # Tampilkan tabel input
