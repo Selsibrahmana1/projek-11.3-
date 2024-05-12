@@ -28,7 +28,7 @@ def calculate_density_section():
             color: #ffffff; /* Warna putih */
         }
         .stMarkdown h1 {
-            color: #A8A9AD !#A8A9AD; /* Warna silver */
+            color: #A8A9AD !important; /* Warna silver */
             padding-bottom: 10px; /* Spasi antara judul dan konten */
         }
         .stMarkdown {
@@ -42,7 +42,7 @@ def calculate_density_section():
             color: #ffffff;
         }
         .stTextInput>div>div>input {
-            background-color: ##A8A9AD; /* Warna silver */
+            background-color: #A8A9AD; /* Warna silver */
             color: #333333;
         }
         </style>
