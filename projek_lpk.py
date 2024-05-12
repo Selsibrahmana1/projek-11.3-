@@ -23,7 +23,7 @@ def calculate_density_section():
         """
         <style>
         .stApp {
-            background-image: url("https://images8.alphacoders.com/104/thumb-1920-1048951.jpg");
+            background-image: url("https://th.bing.com/th/id/OIP.Phr7kl01sLf1jwhio7CrNQHaE8?rs=1&pid=ImgDetMain");
             background-size: cover;
             color: #1e90ff; /* Warna biru gelap */
         }
